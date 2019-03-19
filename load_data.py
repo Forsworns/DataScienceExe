@@ -1,5 +1,7 @@
+# load data of features and labels
+
 def load_label():
-    file_name = "AwA2-labels.txt"
+    file_name = "data/AwA2-labels.txt"
     with open(file_name) as f:
         lines = f.readlines()
     y = [int(line.strip('\n')) for line in lines]
@@ -7,7 +9,7 @@ def load_label():
 
 
 def load_feature():
-    file_name = "AwA2-features.txt"
+    file_name = "data/AwA2-features.txt"
     with open(file_name) as f:
         lines = f.readlines()
     lines = [line.strip('\n') for line in lines]
@@ -28,5 +30,5 @@ if __name__ == "__main__":
     feature_amount = len(X[0])
     label_amount = len(y)
     type_amount = len(set(y))
-    print("images %d, features %d, labels %d, types %d",
-          image_amount, feature_amount, label_amount, type_amount)
+    print("images {}, features {}, labels {}, types {}".format(
+          image_amount, feature_amount, label_amount, type_amount))
