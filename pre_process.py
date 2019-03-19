@@ -6,8 +6,7 @@ from configs import TEST_SIZE
 
 # 预处理分划数据
 
-def pre_process():
-	X, y = load_data()
+def pre_process(X,y):
 	X = np.asarray(X)
 	y = np.asarray(y)
 	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE)
