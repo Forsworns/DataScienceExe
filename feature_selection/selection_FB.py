@@ -6,9 +6,7 @@ from sklearn.feature_selection import (
 import numpy as np
 
 from configs import *
-from baseline import SVM_recommend
-
-FORWARD_ACCURACY = 0.1
+from baseline import SVM_recommend_run
 
 # feature太多，不便于逐个前向/后向筛选，故采用一些筛选的策略
 def VT(X, y):
@@ -17,7 +15,7 @@ def VT(X, y):
 		selector = VarianceThreshold(threshold=var)
 		X = selector.fit_transform(X)
 		X_train, X_test, y_train, y_test = pre_process(X, y)
-		SVM_recommend(B_VT, X_train, X_test, y_train, y_test)
+		SVM_recommend_run(B_VT, X_train, X_test, y_train, y_test, {'variance':var})
 
 
 def UF(X, y):
@@ -27,7 +25,7 @@ def UF(X, y):
 		selector = SelectKBest(chi2, k=k)
 		X = selector.fit_transform(X)
 		X_train, X_test, y_train, y_test = pre_process(X, y)
-		SVM_recommend(F_UF, X_train, X_test, y_train, y_test)
+		SVM_recommend_run(F_UF, X_train, X_test, y_train, y_test, {'k-best':k})
 
 
 def SFM(X, y):
@@ -39,7 +37,7 @@ def SFM(X, y):
 		selector = SelectFromModel(clf,threshold=-np.inf,max_features=m) # 只根据max_features确定选择的数量，不设定threshold
 		X = selector.fit_transform(X)
 		X_train, X_test, y_train, y_test = pre_process(X, y)
-		clf = SVM_recommend(F_UF, X_train, X_test, y_train, y_test)
+		clf = SVM_recommend_run(F_UF, X_train, X_test, y_train, y_test, {'max-features':m})
 
 
 
