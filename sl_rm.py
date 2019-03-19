@@ -5,8 +5,8 @@ from configs import *
 
 # for model/result saving/loading
 
-# model 为实际的模型，model_name为采用的方法名，比如PCA，LDA，paras为字典表示的方法采用的参数
 def save_model(model, model_name, paras):
+    # model 为实际的模型，model_name为采用的方法名，比如PCA，LDA，paras为字典表示的方法采用的参数
     model_name = build_file_name(model_name, paras, MODEL)
     dump(model, model_name)
 
@@ -20,8 +20,8 @@ def load_model(model_name, paras):
     return model
 
 
-# content是一个模型评估记录, 后两个参数同上
 def save_result(content, model_name, paras):
+    # content是一个模型评估记录, 后两个参数同上
     result_name = build_file_name(model_name, paras, RESULT)
     with open(result_name, 'w') as f:
         f.write(json.dumps(content))
