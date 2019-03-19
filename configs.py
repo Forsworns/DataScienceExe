@@ -13,6 +13,7 @@ B_SFM = "backward_select_from_model"
 TEST_SIZE = 0.4
 
 # paras for SVM base
-DECI_FUNCS = ['ovo', 'ovr']
-KERNELS = ['linear', 'poly', 'rbf', 'sigmoid', 'precomputed']
+# DECI_FUNCS = ['ovo', 'ovr']
+DECI_FUNCS = ['ovr']
+KERNELS = ['linear', 'poly', 'rbf', 'sigmoid']
 CS = [0.5, 1, 2]

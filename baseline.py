@@ -7,7 +7,7 @@ from sl_rm import *
 from configs import *
 
 
-def SVM_recommend(model_name, X_train, X_test, y_train, y_test, C=2, k='rbf',d='ovo'):
+def SVM_recommend(model_name, X_train, X_test, y_train, y_test, C=2, k='rbf',d='ovr'):
     # 统一用于后续实验比较的SVM，只提供前五个参数
     paras = {'C': C, 'kernel': k, 'decision_function_shape': d}
 
