@@ -14,7 +14,7 @@ def SVM_recommend(**SVM_paras):
 def SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, paras={}, **SVM_paras):
     # 统一用于后续实验比较的SVM，提供前六个参数
     if SVM_paras == {}:
-        SVM_paras = {'C': 2, 'kernel': 'rbf', 'decision_function_shape': 'ovr'}
+        SVM_paras = {'C': 2, 'kernel': 'rbf', 'decision_function_shape': 'ovo'}
     if paras == {}:
         paras.update(SVM_paras)
     result = load_result(model_name, paras)
