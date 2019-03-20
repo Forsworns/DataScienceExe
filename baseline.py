@@ -8,12 +8,12 @@ from configs import *
 
 def SVM_recommend(**SVM_paras):
     if SVM_paras == {}:
-        SVM_paras = {'C': 0.01}
+        SVM_paras = {'C': 0.01, 'max_iter': 2000}
     return LinearSVC(**SVM_paras)
 
 def SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, paras={}, **SVM_paras):
     if SVM_paras == {}:
-        SVM_paras = {'C': 0.01}
+        SVM_paras = {'C': 0.01, 'max_iter': 2000}
     if paras == {}:
         paras.update(SVM_paras)
     result = load_result(model_name, paras)
