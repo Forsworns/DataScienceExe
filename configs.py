@@ -15,7 +15,6 @@ BORUTA = "boruta"
 TEST_SIZE = 0.4
 
 # paras for SVM base
-# DECI_FUNCS = ['ovo', 'ovr']
-DECI_FUNCS = ['ovr']
+DECI_FUNCS = ['ovo', 'ovr']
 KERNELS = ['linear', 'poly', 'rbf', 'sigmoid']
 CS = [0.5, 1, 2]

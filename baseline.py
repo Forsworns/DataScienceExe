@@ -8,7 +8,7 @@ from configs import *
 
 def SVM_recommend(**SVM_paras):
     if SVM_paras == {}:
-        SVM_paras = {'C': 2, 'kernel': 'rbf', 'decision_function_shape': 'ovr'}
+        SVM_paras = {'C': 2, 'kernel': 'rbf', 'decision_function_shape': 'ovo'}
     return SVC(**SVM_paras)
 
 def SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, paras={}, **SVM_paras):
@@ -29,7 +29,7 @@ def SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, paras={}, **
         # unweighted mean of metrics for labels
         f1_sc = f1_score(y_test, y_pred, average='macro')
         result = {'score': sc, 'f1_score': f1_sc}
-        save_result(result, model_name, result)
+        save_result(result, model_name, paras)
         print("{} with {}: score is {}, f1_score is {}".format(
             model_name, paras, sc, f1_sc))
         return clf
@@ -47,7 +47,7 @@ def SVM_base(model_name, X, y):
     for d in DECI_FUNCS:
             for k in KERNELS:
                 for C in CS:
-                    SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, {}, C=C, kernel=k, decision_function_shape=d)
+                    SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, paras={}, C=C, kernel=k, decision_function_shape=d)
 
 
 if __name__ == "__main__":
