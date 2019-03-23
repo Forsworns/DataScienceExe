@@ -8,9 +8,9 @@ from configs import *
 
 # 预处理分划数据
 
-def pre_process(X=None,y=None):
+def pre_process(X=None,y=None,bReset=False):
 	# 之前没有存下来，导致每次test set和train set会变化
-	if os.path.exists(X_TRAIN) and os.path.exists(X_TEST) and os.path.exists(Y_TRAIN) and os.path.exists(Y_TEST):
+	if os.path.exists(X_TRAIN) and os.path.exists(X_TEST) and os.path.exists(Y_TRAIN) and os.path.exists(Y_TEST) and not bReset:
 		X_train = np.load(X_TRAIN)
 		X_test = np.load(X_TEST)
 		y_train = np.load(Y_TRAIN)

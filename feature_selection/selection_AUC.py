@@ -1,12 +1,14 @@
+import sys
+sys.path.append('..')
+
+from sklearn import metrics
+import numpy as np
+import os
+
 from load_data import load_data
 from baseline import SVM_recommend, SVM_recommend_run
 from pre_process import pre_process
-from baseline import SVM
 from configs import *
-from sklearn import metrics
-import numpy as np
-import sys
-sys.path.append('..')
 
 
 def evaluateScore(X, y):
@@ -49,6 +51,7 @@ def transform(X, y):
 
 
 if __name__ == "__main__":
+    os.chdir('..')
     X, y = load_data()
     X = transform(X, y)
     X_train, X_test, y_train, y_test = pre_process(X, y)

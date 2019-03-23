@@ -1,13 +1,16 @@
 import sys
 sys.path.append('..')
 
-from genetic import *
+import os
 
+from genetic import *
 from configs import *
 from load_data import load_data
+from pre_process import pre_process
 from baseline import SVM_recommend, SVM_recommend_run
 
 if __name__ == "__main__":
+    os.chdir('..')
     clf = SVM_recommend()
     X, y = load_data()
     ga_selector = FeatureSelectionGA(clf,X,y,verbose=1)

@@ -2,11 +2,15 @@ import sys
 sys.path.append('..')
 
 from boruta import Boruta
+import os
 
 from configs import *
 from baseline import SVM_recommend, SVM_recommend_run
+from load_data import load_data
+from pre_process import pre_process
 
 if __name__ == "__main__":
+    os.chdir('..')
     clf = SVM_recommend()
     feat_selector = BorutaPy(clf, n_estimators='auto')
     feat_selector.fit(X,y)
