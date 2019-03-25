@@ -19,7 +19,7 @@ def pre_process(X=None,y=None,bReset=False):
 	else:
 		X = np.asarray(X)
 		y = np.asarray(y)
-		X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE)
+		X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE, random_state=1)
 		np.save(X_TRAIN, X_train)
 		np.save(X_TEST, X_test)
 		np.save(Y_TRAIN,y_train)
