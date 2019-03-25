@@ -2,21 +2,28 @@ import sys
 sys.path.append('..')
 
 from sklearn import metrics
+from sklearn.svm import SVC
+from sklearn.preprocessing import label_binarize
 import numpy as np
 import os
 
-from load_data import load_data
-from baseline import SVM_recommend, SVM_recommend_run
+from load_data import load_data_small
+from baseline import SVM_recommend_run
 from pre_process import pre_process
 from configs import *
 
 
 def evaluateScore(X, y):
-    X_train, X_test, y_train, y_test = pre_process(X, y)
-    clf = SVM_recommend()
+    X_train, X_test, y_train, y_test = pre_process(X, y,bReset=True)
+    clf = SVC(C=0.01, max_iter=2000, kernel='linear', probability=True)
     clf.fit(X_train, y_train)
     y_pred = clf.predict(X_test)
-    auc = metrics.roc_auc_score(y_test, y_pred)
+
+    y_classes = set(y)
+    y_pred = label_binarize(y_pred,range(1,len(y_classes)+1))
+    y_test = label_binarize(y_test,range(1,len(y_classes)+1))
+
+    auc = metrics.roc_auc_score(y_test, y_pred, average='micro')
     return auc
 
 
@@ -52,7 +59,8 @@ def transform(X, y):
 
 if __name__ == "__main__":
     os.chdir('..')
-    X, y = load_data()
-    X = transform(X, y)
-    X_train, X_test, y_train, y_test = pre_process(X, y)
-    SVM_recommend_run(AUC, X_train, X_test, y_train, y_test, {'feature_num':X.shape[1]})
+    X, y = load_data_small()
+    print(X.shape)
+    X_ = transform(X, y)
+    X_train, X_test, y_train, y_test = pre_process(X_, y, bReset=True)
+    SVM_recommend_run(AUC, X_train, X_test, y_train, y_test, {'feature_num':X_.shape[1]})

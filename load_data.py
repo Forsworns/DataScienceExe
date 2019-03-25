@@ -1,4 +1,5 @@
 # load data of features and labels
+import numpy as np
 
 def load_label():
     file_name = "data/AwA2-labels.txt"
@@ -22,6 +23,12 @@ def load_data():
     y = load_label()
     return [X, y]
 
+def load_data_small():
+    X = load_feature()
+    y = load_label()
+    X = np.asarray(X)
+    y = np.asarray(y)
+    return [X[::10,1:10], y[::10,...]]
 
 if __name__ == "__main__":
     X = load_feature()
