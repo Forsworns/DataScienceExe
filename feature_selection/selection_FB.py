@@ -42,7 +42,7 @@ def SFM(X, y):
 		selector = SelectFromModel(clf,threshold=-np.inf,max_features=m) # 只根据max_features确定选择的数量，不设定threshold
 		X_ = selector.fit_transform(np.asarray(X),np.asarray(y))
 		X_train, X_test, y_train, y_test = pre_process(X_, y, bReset=True)
-		clf = SVM_recommend_run(F_UF, X_train, X_test, y_train, y_test, paras={'max-features':m})
+		clf = SVM_recommend_run(B_SFM, X_train, X_test, y_train, y_test, paras={'max-features':m})
 
 
 

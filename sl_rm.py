@@ -27,8 +27,11 @@ def save_result(content, model_name, paras):
         f.write(json.dumps(content))
 
 
-def load_result(model_name, paras):
-    result_name = build_file_name(model_name, paras, RESULT)
+def load_result(model_name="", paras="", file_name=""):
+    if file_name == "":
+        result_name = build_file_name(model_name, paras, RESULT)
+    else:
+        result_name = model_name+"/"+file_name
     content = None
     if not os.path.exists(result_name):
         return content

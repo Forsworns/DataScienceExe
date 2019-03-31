@@ -32,7 +32,7 @@ def selectionLoop(X, y):
     good_features = set([])
     num_features = X.shape[1]
     # 选择feature，直到AUC_ROC不再增加
-    while len(score_history) < 2 or score_history[-1][0] > score_history[-2][0]:
+    while len(score_history) < 10 or score_history[-1][0] > score_history[-2][0]:
         scores = []
         for feature in range(num_features):
             if feature not in good_features:
@@ -63,4 +63,4 @@ if __name__ == "__main__":
     print(X.shape)
     X_ = transform(X, y)
     X_train, X_test, y_train, y_test = pre_process(X_, y, bReset=True)
-    SVM_recommend_run(AUC, X_train, X_test, y_train, y_test, {'feature_num':X_.shape[1]})
+    SVM_recommend_run(AUC, X_train, X_test, y_train, y_test, {'feature-num':X_.shape[1]})

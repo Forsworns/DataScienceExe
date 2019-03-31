@@ -28,7 +28,7 @@ def load_data_small():
     y = load_label()
     X = np.asarray(X)
     y = np.asarray(y)
-    return [X[::10,1:10], y[::10,...]]
+    return [X[::10,::10], y[::10,...]]
 
 if __name__ == "__main__":
     X = load_feature()
