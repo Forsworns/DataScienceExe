@@ -12,6 +12,7 @@
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 \usepackage{lipsum}
+\usepackage{graphicx}
 
 
 \newcommand{\argmin}{\arg\!\min}
@@ -124,113 +125,80 @@
 \newcommand{\wrt}{{\em w.r.t.\,}}
 
 
-\title{A template for the \emph{arxiv} style}
+\title{Dimensionality Reduction}
 
 
 \author{
-  David S.~Hippocampus\thanks{Use footnote for providing further
-    information about author (webpage, alternative
-    address)---\emph{not} for acknowledging funding agencies.} \\
-  Department of Computer Science\\
-  Cranberry-Lemon University\\
-  Pittsburgh, PA 15213 \\
-  \texttt{hippo@cs.cranberry-lemon.edu} \\
-  %% examples of more authors
-   \And
- Elias D.~Striatum \\
-  Department of Electrical Engineering\\
-  Mount-Sheikh University\\
-  Santa Narimana, Levand \\
-  \texttt{stariate@ee.mount-sheikh.edu} \\
-  %% \AND
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
-  %% \And
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
-  %% \And
-  %% Coauthor \\
-  %% Affiliation \\
-  %% Address \\
-  %% \texttt{email} \\
+  Haoqi~Zhang\\
+  \And
+  Kaiqi~Jin\\
+  \And
+  Peihao~Yang\\
+  \texttt{516021910233} \\
+  \And
+  Yi~Zhang\\
 }
-
+  
 \begin{document}
 \maketitle
 
 \begin{abstract}
-\lipsum[1]
+In this report, we first use support vector machine (SVM) to classify 37322 images with 2048 pre-extracted deep learning features for each image. The data is from the Attributes (AwA2) dataset~\cite{AwA2}. We then reduce the dimensionality in different way and make classification with SVM again. The experiments show that some dimensionality reuction methods are efficient and reliable.
 \end{abstract}
 
 
 % keywords can be removed
-\keywords{First keyword \and Second keyword \and More}
+\keywords{Dimensionality reduction \and Feature selection \and Feature projection \and Feature learning}
 
 
 \section{Introduction}
-\lipsum[2]
-\lipsum[3]
+Since the information revolution last century, more and more data has been generated. The dimension curse gradually becomes a critical problem in data science. The last decades have seen plenty of methods to reduce the dimensionality of the data. In this report, we will divide them into three classes, and discuss them based on solid experiment results.
+
+Support vector machine (SVM) is a classical method often applied in the classification tasks~\cite{SVM}. By introducing the kernel trick,  
+
+The Section~\ref{sec:baseline} is the leadin. We will introduce the assessment baseline and assessment criterions applied. The dimensionality reduction methods would be covered in the next three section. In Section~\ref{sec:selection}, we introduce the feature selection methods in detail. We analysis the feature projection methods in Section~\ref{sec:projection}. The feature learning methods are discussed in Section~\ref{sec:learning}. The experiment results and comparisons are in the Section~\ref{sec:discussion}.  In the end, a thorough conclusion is made.
 
 
 \section{Baseline}
 \label{sec:baseline}
 
-\paragraph{}
-\lipsum[7]
-
 \section{Feature selection}
 \label{sec:selection}
-
+Feature selection is a kind of methods that directly select some features from the original data. The core of these methods are often the selection criterion. The thought of feature selection is simple but they are efficient and reliable.
 \subsection{Theory}
-\lipsum[10] 
-See Figure \ref{fig:fig1}. Here is how you add footnotes. \footnote{Sample of the first footnote.}
-\lipsum[11] 
-
-\begin{figure}
-  \centering
-  \fbox{\rule[-.5cm]{4cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
-  \caption{Sample figure caption.}
-  \label{fig:fig1}
-\end{figure}
+We will introduce the feature selection methods used in our experiments.
+\subsubsection{Univariable feature}
+This is a forward selection method.
 
 \subsection{Experiment}
-\lipsum[12]
-See awesome Table~\ref{tab:table}.
-
-\begin{table}
- \caption{Sample table title}
-  \centering
-  \begin{tabular}{lll}
-    \toprule
-    \multicolumn{2}{c}{Part}                   \\
-    \cmidrule(r){1-2}
-    Name     & Description     & Size ($\mu$m) \\
-    \midrule
-    Dendrite & Input terminal  & $\sim$100     \\
-    Axon     & Output terminal & $\sim$10      \\
-    Soma     & Cell body       & up to $10^6$  \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:table}
-\end{table}
-
-% \subsubsection{Lists}
-\begin{itemize}
-\item Lorem ipsum dolor sit amet
-\item consectetur adipiscing elit. 
-\item Aliquam dignissim blandit est, in dictum tortor gravida eget. In ac rutrum magna.
-\end{itemize}
+This part is mainly about the implementation details and parameter settings. The figure of final results are shown in the Section~\ref{sec:discussion}.
 
 \section{Feature projection}
+\label{sec:projection}
 
 \section{Feature learning}
+\label{sec:learning}
 
 \section{Discussion}
-compare or discuss the methods before?
+\label{sec:discussion}
+\subsection{SVM parameter setting}
+Though in the end, we choose the asked linear SVM to do the comparison experiments for dimensionality reduction, we still make experiment on the SVM parameter setting. The experiment results are shown in the Figure~(\ref{fig:SVM}).
+
+\begin{figure}
+	\label{fig:SVM}
+	\includegraphics[width=\linewidth]{figs/compare.png}
+\end{figure}
+
+
+\subsection{Reduction on the complete dataset}
+Most dimensionality reduction experiments were carried on the complete AwA2 dataset. We changed the number of selected features or other parameters to control the degree of the reduction, and then train linear SVMs on these reduction results. The criterions for the SVM predictions, as mentioned before, are the f1-score and mean accuracy. The comparison is shown in Figure~(\ref{fig:complete}).
+  \begin{figure}
+  	\label{fig:complete}
+  	\includegraphics[width=\linewidth]{figs/feature_selection.png}
+  \end{figure}
+
+\subsection{Reduction on the smaller dataset}
+As mentioned before, the AwA2 dataset is too large for some reduction methods, so we made experiments on a smaller dataset to verify the effectiveness of these methods. This smaller dataset was selected from the AwA2 dataset.
 
 \section{Conclusion}
 
