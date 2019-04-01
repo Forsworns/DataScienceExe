@@ -1,0 +1,241 @@
+\documentclass{article}
+
+
+\usepackage{arxiv}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}
+
+
+\newcommand{\argmin}{\arg\!\min}
+%\newcommand{\st}{\mathrm{s.\,t.}}
+\newcommand{\Amat}{{\boldsymbol A}}
+\newcommand{\Bmat}{{\boldsymbol B}}
+\newcommand{\Cmat}{{\boldsymbol C}}
+\newcommand{\Dmat}{{\boldsymbol D}}
+\newcommand{\Emat}[0]{{{\boldsymbol E}}}
+\newcommand{\Fmat}[0]{{{\boldsymbol F}}}
+\newcommand{\Gmat}[0]{{{\boldsymbol G}}}
+\newcommand{\Hmat}[0]{{{\boldsymbol H}}}
+\newcommand{\Imat}{{\boldsymbol I}}
+\newcommand{\Jmat}[0]{{{\boldsymbol J}}}
+\newcommand{\Kmat}[0]{{{\boldsymbol K}}}
+\newcommand{\Lmat}[0]{{{\boldsymbol L}}}
+\newcommand{\Mmat}[0]{{{\boldsymbol M}}}
+\newcommand{\Nmat}[0]{{{\boldsymbol N}}}
+\newcommand{\Omat}[0]{{{\boldsymbol O}}}
+\newcommand{\Pmat}[0]{{{\boldsymbol P}}}
+\newcommand{\Qmat}[0]{{{\boldsymbol Q}}}
+\newcommand{\Rmat}[0]{{{\boldsymbol R}}}
+\newcommand{\Smat}[0]{{{\boldsymbol S}}}
+\newcommand{\Tmat}[0]{{{\boldsymbol T}}}
+\newcommand{\Umat}{{{\boldsymbol U}}}
+\newcommand{\Vmat}[0]{{{\boldsymbol V}}}
+\newcommand{\Wmat}[0]{{{\boldsymbol W}}}
+\newcommand{\Xmat}{{\boldsymbol X}}
+\newcommand{\Ymat}[0]{{{\boldsymbol Y}}}
+\newcommand{\Zmat}{{\boldsymbol Z}}
+
+\newcommand{\av}{\boldsymbol{a}}
+\newcommand{\Av}{\boldsymbol{A}}
+\newcommand{\Cv}{\boldsymbol{C}}
+\newcommand{\bv}{\boldsymbol{b}}
+\newcommand{\cv}{{\boldsymbol{c}}}
+\newcommand{\dv}{\boldsymbol{d}}
+\newcommand{\ev}[0]{{\boldsymbol{e}}}
+\newcommand{\fv}{\boldsymbol{f}}
+\newcommand{\Fv}[0]{{\boldsymbol{F}}}
+\newcommand{\gv}[0]{{\boldsymbol{g}}}
+\newcommand{\hv}[0]{{\boldsymbol{h}}}
+\newcommand{\iv}[0]{{\boldsymbol{i}}}
+\newcommand{\jv}[0]{{\boldsymbol{j}}}
+\newcommand{\kv}[0]{{\boldsymbol{k}}}
+\newcommand{\lv}[0]{{\boldsymbol{l}}}
+\newcommand{\mv}[0]{{\boldsymbol{m}}}
+\newcommand{\nv}{\boldsymbol{n}}
+\newcommand{\ov}[0]{{\boldsymbol{o}}}
+\newcommand{\pv}[0]{{\boldsymbol{p}}}
+\newcommand{\qv}[0]{{\boldsymbol{q}}}
+\newcommand{\rv}[0]{{\boldsymbol{r}}}
+\newcommand{\sv}[0]{{\boldsymbol{s}}}
+\newcommand{\tv}[0]{{\boldsymbol{t}}}
+\newcommand{\uv}[0]{{\boldsymbol{u}}}
+\newcommand{\vv}{\boldsymbol{v}}
+\newcommand{\wv}{\boldsymbol{w}}
+\newcommand{\Wv}{\boldsymbol{W}}
+\newcommand{\xv}{\boldsymbol{x}}
+\newcommand{\yv}{\boldsymbol{y}}
+\newcommand{\Xv}{\boldsymbol{X}}
+\newcommand{\Yv}{\boldsymbol{Y}}
+\newcommand{\zv}{\boldsymbol{z}}
+
+\newcommand{\xvf}{\widetilde{\xv}}
+\newcommand{\Fmb}{\boldsymbol{\mathcal{F}}}
+
+\newcommand{\Gammamat}[0]{{\boldsymbol{\Gamma}}}
+\newcommand{\Deltamat}[0]{{\boldsymbol{\Delta}}}
+\newcommand{\Thetamat}{\boldsymbol{\Theta}}
+\newcommand{\Lambdamat}{{\boldsymbol{\Lambda}}}
+\newcommand{\Ximat}[0]{{\boldsymbol{\Xi}}}
+\newcommand{\Pimat}[0]{{\boldsymbol{\Pi}} }
+\newcommand{\Sigmamat}{\boldsymbol{\Sigma}}
+\newcommand{\Upsilonmat}[0]{{\boldsymbol{\Upsilon}} }
+\newcommand{\Phimat}{\boldsymbol{\Phi}}
+\newcommand{\Psimat}{\boldsymbol{\Psi}}
+\newcommand{\Omegamat}{{\boldsymbol{\Omega}}}
+
+\newcommand{\Lambdav}{\bm{\Lambda}}
+\newcommand{\alphav}{\boldsymbol{\alpha}}
+\newcommand{\betav}[0]{{\boldsymbol{\beta}} }
+\newcommand{\gammav}{{\boldsymbol{\gamma}}}
+\newcommand{\deltav}[0]{{\boldsymbol{\delta}} }
+\newcommand{\epsilonv}{\boldsymbol{\epsilon}}
+\newcommand{\zetav}[0]{{\boldsymbol{\zeta}} }
+\newcommand{\etav}[0]{{\boldsymbol{\eta}} }
+\newcommand{\thetav}{\boldsymbol{\theta}}
+\newcommand{\iotav}[0]{{\boldsymbol{\iota}} }
+\newcommand{\kappav}{{\boldsymbol{\kappa}}}
+\newcommand{\lambdav}[0]{{\boldsymbol{\lambda}} }
+\newcommand{\muv}{\boldsymbol{\mu}}
+\newcommand{\nuv}{{\boldsymbol{\nu}}}
+\newcommand{\xiv}{{\boldsymbol{\xi}}}
+\newcommand{\omicronv}[0]{{\boldsymbol{\omicron}} }
+\newcommand{\piv}{\boldsymbol{\pi}}
+\newcommand{\rhov}[0]{{\boldsymbol{\rho}} }
+\newcommand{\sigmav}[0]{{\boldsymbol{\sigma}} }
+\newcommand{\tauv}[0]{{\boldsymbol{\tau}} }
+\newcommand{\upsilonv}[0]{{\boldsymbol{\upsilon}} }
+\newcommand{\phiv}{\boldsymbol{\phi}}
+\newcommand{\chiv}[0]{{\boldsymbol{\chi}} }
+\newcommand{\psiv}{\boldsymbol{\psi}}
+\newcommand{\omegav}[0]{{\boldsymbol{\omega}} }
+
+\newcommand{\tsp}{^{\mathsf{T}}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\ie}{{\em i.e.}}
+\newcommand{\eg}{{\em e.g.}}
+\newcommand{\wrt}{{\em w.r.t.\,}}
+
+
+\title{A template for the \emph{arxiv} style}
+
+
+\author{
+  David S.~Hippocampus\thanks{Use footnote for providing further
+    information about author (webpage, alternative
+    address)---\emph{not} for acknowledging funding agencies.} \\
+  Department of Computer Science\\
+  Cranberry-Lemon University\\
+  Pittsburgh, PA 15213 \\
+  \texttt{hippo@cs.cranberry-lemon.edu} \\
+  %% examples of more authors
+   \And
+ Elias D.~Striatum \\
+  Department of Electrical Engineering\\
+  Mount-Sheikh University\\
+  Santa Narimana, Levand \\
+  \texttt{stariate@ee.mount-sheikh.edu} \\
+  %% \AND
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\lipsum[1]
+\end{abstract}
+
+
+% keywords can be removed
+\keywords{First keyword \and Second keyword \and More}
+
+
+\section{Introduction}
+\lipsum[2]
+\lipsum[3]
+
+
+\section{Baseline}
+\label{sec:baseline}
+
+\paragraph{}
+\lipsum[7]
+
+\section{Feature selection}
+\label{sec:selection}
+
+\subsection{Theory}
+\lipsum[10] 
+See Figure \ref{fig:fig1}. Here is how you add footnotes. \footnote{Sample of the first footnote.}
+\lipsum[11] 
+
+\begin{figure}
+  \centering
+  \fbox{\rule[-.5cm]{4cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
+  \caption{Sample figure caption.}
+  \label{fig:fig1}
+\end{figure}
+
+\subsection{Experiment}
+\lipsum[12]
+See awesome Table~\ref{tab:table}.
+
+\begin{table}
+ \caption{Sample table title}
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    \multicolumn{2}{c}{Part}                   \\
+    \cmidrule(r){1-2}
+    Name     & Description     & Size ($\mu$m) \\
+    \midrule
+    Dendrite & Input terminal  & $\sim$100     \\
+    Axon     & Output terminal & $\sim$10      \\
+    Soma     & Cell body       & up to $10^6$  \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:table}
+\end{table}
+
+% \subsubsection{Lists}
+\begin{itemize}
+\item Lorem ipsum dolor sit amet
+\item consectetur adipiscing elit. 
+\item Aliquam dignissim blandit est, in dictum tortor gravida eget. In ac rutrum magna.
+\end{itemize}
+
+\section{Feature projection}
+
+\section{Feature learning}
+
+\section{Discussion}
+compare or discuss the methods before?
+
+\section{Conclusion}
+
+\bibliographystyle{unsrt}  
+\bibliography{references}
+
+
+\end{document}
