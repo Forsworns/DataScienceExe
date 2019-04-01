@@ -36,7 +36,6 @@ if __name__ == "__main__":
 	print(labels)
 	print(contents)
 
-
 	# plot for ovo/ovr score
 	plt.figure(figsize=(6, 6))
 	plt.subplots_adjust(bottom=.05, top=0.97, hspace=.25, wspace=.15,
@@ -85,4 +84,144 @@ if __name__ == "__main__":
 		plt.xlabel("C")
 		plt.yticks(np.linspace(0,1,11))
 		plt.legend(fontsize='xx-large')
+	plt.show()
+
+
+	# plot for baseline
+	scs = []
+	f1s = []
+	for idx, paras in enumerate(labels[BASELINE]):
+		sc = contents[BASELINE][idx]['score']
+		f1 = contents[BASELINE][idx]['f1_score']
+		scs.append(sc)
+		f1s.append(f1)
+	plt.figure(figsize=(6, 6))
+	plt.plot(CS,scs)
+	plt.title('baseline score')
+	plt.ylabel("score")
+	plt.xlabel("C")
+	plt.show()
+	plt.figure(figsize=(6, 6))
+	plt.plot(CS,f1s)
+	plt.title('baseline f1-score')
+	plt.ylabel("f1-score")
+	plt.xlabel("C")
+	plt.show()
+	
+
+	# plot for summary
+	plt.figure(figsize=(6, 6))
+	plt.plot([i for i in range(2048)], [scs[0] for _ in range(2048)],color=COLORS[0],label=BASELINE)
+	# plot for forward_univariable_feature
+	zips = []
+	for idx, paras in enumerate(labels[F_UF]):
+		fn = int(paras['k-best'])
+		sc = contents[F_UF][idx]['score']
+		f1 = contents[F_UF][idx]['f1_score']
+		zips.append((fn,sc,f1))
+	zips.sort(key=lambda x:x[0])
+	fns = [fn for fn,_,_ in zips] 
+	scs = [sc for _,sc,_ in zips] 
+	f1s = [f1 for _,_,f1 in zips] 
+	plt.plot(fns,scs,color=COLORS[1],label=F_UF)
+	scs = []
+	f1s = []
+	fns = []
+	for idx, paras in enumerate(labels[B_VT]):
+		fn = paras['feature-num']
+		fns.append(fn)
+		sc = contents[B_VT][idx]['score']
+		f1 = contents[B_VT][idx]['f1_score']
+		scs.append(sc)
+		f1s.append(f1)
+	plt.plot(fns,scs,color=COLORS[2],label=B_VT)
+	# plot for backward_select_from_model
+	zips = []
+	for idx, paras in enumerate(labels[B_SFM]):
+		fn = int(paras['max-features'])
+		sc = contents[B_SFM][idx]['score']
+		f1 = contents[B_SFM][idx]['f1_score']
+		zips.append((fn,sc,f1))
+	zips.sort(key=lambda x:x[0])
+	fns = [fn for fn,_,_ in zips] 
+	scs = [sc for _,sc,_ in zips] 
+	f1s = [f1 for _,_,f1 in zips] 
+	plt.plot(fns,scs,color=COLORS[3],label=B_SFM)
+	plt.legend(fontsize='xx-large')
+	plt.title("feature selection")
+	plt.show()
+
+
+	# plot for forward_univariable_feature
+	zips = []
+	for idx, paras in enumerate(labels[F_UF]):
+		fn = int(paras['k-best'])
+		sc = contents[F_UF][idx]['score']
+		f1 = contents[F_UF][idx]['f1_score']
+		zips.append((fn,sc,f1))
+	zips.sort(key=lambda x:x[0])
+	fns = [fn for fn,_,_ in zips] 
+	scs = [sc for _,sc,_ in zips] 
+	f1s = [f1 for _,_,f1 in zips] 
+	plt.figure(figsize=(6, 6))
+	plt.plot(fns,scs)
+	plt.title('forward univariable feature score')
+	plt.ylabel("score")
+	plt.xlabel("feature numbers")
+	plt.show()
+	plt.figure(figsize=(6, 6))
+	plt.plot(fns,f1s)
+	plt.title('forward univariable feature f1-score')
+	plt.ylabel("f1-score")
+	plt.xlabel("feature numbers")
+	plt.show()
+
+
+	# plot for backward_variance_threshold
+	scs = []
+	f1s = []
+	fns = []
+	for idx, paras in enumerate(labels[B_VT]):
+		fn = paras['feature-num']
+		fns.append(fn)
+		sc = contents[B_VT][idx]['score']
+		f1 = contents[B_VT][idx]['f1_score']
+		scs.append(sc)
+		f1s.append(f1)
+	plt.figure(figsize=(6, 6))
+	plt.plot(fns,scs)
+	plt.title('backward variance threshold score')
+	plt.ylabel("score")
+	plt.xlabel("feature numbers")
+	plt.show()
+	plt.figure(figsize=(6, 6))
+	plt.plot(fns,f1s)
+	plt.title('backward variance threshold f1-score')
+	plt.ylabel("f1-score")
+	plt.xlabel("feature numbers")
+	plt.show()
+
+
+	# plot for backward_select_from_model
+	zips = []
+	for idx, paras in enumerate(labels[B_SFM]):
+		fn = int(paras['max-features'])
+		sc = contents[B_SFM][idx]['score']
+		f1 = contents[B_SFM][idx]['f1_score']
+		zips.append((fn,sc,f1))
+	zips.sort(key=lambda x:x[0])
+	fns = [fn for fn,_,_ in zips] 
+	scs = [sc for _,sc,_ in zips] 
+	f1s = [f1 for _,_,f1 in zips] 
+	plt.figure(figsize=(6, 6))
+	plt.plot(fns,scs)
+	plt.title('backward select from model score')
+	plt.ylabel("score")
+	plt.xlabel("feature numbers")
+	plt.show()
+	plt.figure(figsize=(6, 6))
+	plt.plot(fns,f1s)
+	plt.title('backward select from model f1-score')
+	plt.ylabel("f1-score")
+	plt.xlabel("feature numbers")
 	plt.show()
