@@ -148,7 +148,7 @@
 \maketitle
 
 \begin{abstract}
-In this report, we first use support vector machine (SVM) to classify 37322 images with 2048 pre-extracted deep learning features for each image. The data is from the Attributes (AwA2) dataset~\cite{AwA2}. We then reduce the dimensionality in different way and make classification with SVM again. The experiments show that some dimensionality reuction methods are efficient and reliable.
+In this report, we first use support vector machine (SVM) to classify 37322 images with 2048 pre-extracted deep learning features for each image. The data is from the Attributes (AwA2) dataset~\cite{awa2}. We then reduce the dimensionality in different way and make classification with SVM again. The experiments show that some dimensionality reuction methods are efficient and reliable.
 \end{abstract}
 
 
@@ -161,7 +161,7 @@ Since the information revolution last century, more and more data has been gener
 
 In this report, we will divide reduction methods into three classes, and discuss them based on solid experiment results. The first kind of reduction methods is feature selection, which means that we directly select important features from raw data to reduce the dimensionality, such as variance threshold based selection (VT), genetic algorithm(GA), and so on. The second one is feature projection, which means that we can apply reduction by projecting original features to a low dimensionality space without much loss of information, such as principle component analysis (PCA), linear discriminant analysis (LDA). The last but not least, we will introduce some nowadays prevalent methods based on feature learning, such as t-distributed stochastic neighbor embedding (TSNE), random forest (RF), local linear embedding (LLE) and so on.
 
-Support vector machine (SVM) is a classical method often applied in the classification tasks~\cite{SVM}. By introducing the kernel trick, the SVM could overcome the limits of linear model, and be applied to non-linear problems~\cite{}. We will analyse several kinds of kernel SVM and compare their classification ability on AwA2 dataset.
+Support vector machine (SVM) is a classical method often applied in the classification tasks~\cite{SVM}. By introducing the kernel trick, the SVM could overcome the limits of linear model, and be applied to non-linear problems~\cite{kernel}. We will analyse several kinds of kernel SVM and compare their classification ability on AwA2 dataset.
 
 The Section~\ref{sec:baseline} is the leadin. We will introduce the assessment baseline and assessment criterions applied. The dimensionality reduction methods would be covered in the next three section. In Section~\ref{sec:selection}, we introduce the feature selection methods in detail. We analysis the feature projection methods in Section~\ref{sec:projection}. The feature learning methods are discussed in Section~\ref{sec:learning}. The experiment results and comparisons are in the Section~\ref{sec:discussion}.  In the end, a thorough conclusion is made.
 
@@ -248,7 +248,7 @@ where $P$ is the precision, $R$ is the recall, $TP$ is true positive amount, $FP
 
 The experiment results with different kernel functions are shown in the Figure~(\ref{fig:SVM}). We can find linear SVM nearly always outperforms others on the AwA2 dataset with arbitary parameter $C$. And linear SVM is much faster and smaller than any other kind of SVM. So it's reasonable that the linear SVM is recommended in the tutorial. It seems that the linear SVM is more robust than SVM with other kernels despite what the parameter $C$ is.
 
-The "ovo" in Figure~\ref{fig:SVM} means "one-vs-one" and "one-vs-rest" for multi- class classification~\cite{}. For "one-vs-one", if $K$ is the number of classes, then $K * (K - 1) / 2$ classifiers are constructed and each one trains data from two classes. As for "one-vs-rest", only $K$ classifiers are constructed. The result is similar for the both kind of classifiers. To reduce the calculation, we use "ovr" in our baseline linear SVM.
+The "ovo" in Figure~\ref{fig:SVM} means "one-vs-one" and "one-vs-rest" for multi- class classification~\cite{ovo}. For "one-vs-one", if $K$ is the number of classes, then $K * (K - 1) / 2$ classifiers are constructed and each one trains data from two classes. As for "one-vs-rest", only $K$ classifiers are constructed. The result is similar for the both kind of classifiers. To reduce the calculation, we use "ovr" in our baseline linear SVM.
 
 \begin{figure}
 	\label{fig:SVM}
@@ -309,7 +309,7 @@ shows. And it uses a parameter called $SVM.\_coef$ to record the $\thetav$ in th
 
 
 \subsection{Area Under Curve ROC}
-This is a forward selection method. This method is similar the univariate feature selection, the difference is the selection criterion is not the dependent degree, but the area under the curve of receiver operating characteristic (AUC\_ROC). 
+This is a forward selection method. This method is similar the univariate feature selection, the difference is the selection criterion is not the dependent degree, but the area under the curve of receiver operating characteristic (AUC\_ROC)~\cite{ROC}. 
 
 The ROC is kind a curve that measure the ability of classifier. Recall the true positive (TP), false positive, true negative (TN) and false negative (FN) mentioned above. We further define the false positive rate (FPR) and the true positive rate (TPR), where
 \begin{equation}
