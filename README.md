@@ -1,5 +1,9 @@
 # CS245
 
+- exe1 Feature dimensionality reduction. SVM to evaluate.
+- exe2 Distance metrics. KNN to evaluate.
+- 
+
 将AwA2-labels.txt和AwA2-features.txt放置于data目录下。
 
 `load_data.py` 可以读取数据，参考`baseline.py` 中的用法。
