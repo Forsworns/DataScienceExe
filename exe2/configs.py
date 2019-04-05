@@ -4,14 +4,8 @@ import numpy as np
 MODEL = "models"
 RESULT = "results"
 
-# models
-BASELINE = "SVC_baseline"
-COMPARE = "SVC_compare"
-GA = "genetic_algorithm"
-B_VT = "backward_variance_threshold"
-F_UF = "forward_univariable_feature"
-B_SFM = "backward_select_from_model"
-AUC = "AUC_ROC"
+# distance
+DIST_LIST = ['euclidean','manhattan','chebyshev','minkowski_3','minkowski_4','mahalanobis','canberra','braycurtis','cosine']
 
 # test train split
 TEST_SIZE = 0.4

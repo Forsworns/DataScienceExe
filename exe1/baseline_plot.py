@@ -36,6 +36,7 @@ if __name__ == "__main__":
 	print(labels)
 	print(contents)
 
+	
 	# plot for ovo/ovr score
 	plt.figure(figsize=(6, 6))
 	plt.subplots_adjust(bottom=.05, top=0.97, hspace=.25, wspace=.15,
@@ -115,6 +116,21 @@ if __name__ == "__main__":
 	plt.plot([i for i in range(2048)], [scs[0] for _ in range(2048)],color=COLORS[0],label=BASELINE)
 	plt.subplot(1,2,2)
 	plt.plot([i for i in range(2048)], [f1s[0] for _ in range(2048)],color=COLORS[0],label=BASELINE)
+	# plot for AUC ROC
+	zips = []
+	for idx, paras in enumerate(labels[AUC]):
+		fn = int(paras['feature-num'])
+		sc = contents[AUC][idx]['score']
+		f1 = contents[AUC][idx]['f1_score']
+		zips.append((fn,sc,f1))
+	zips.sort(key=lambda x:x[0])
+	fns = [fn for fn,_,_ in zips] 
+	scs = [sc for _,sc,_ in zips] 
+	f1s = [f1 for _,_,f1 in zips] 
+	plt.subplot(1,2,1)
+	plt.plot(fns,scs,color=COLORS[1],label=AUC)
+	plt.subplot(1,2,2)
+	plt.plot(fns,f1s,color=COLORS[1],label=AUC)
 	# plot for forward_univariable_feature
 	zips = []
 	for idx, paras in enumerate(labels[F_UF]):
@@ -127,9 +143,10 @@ if __name__ == "__main__":
 	scs = [sc for _,sc,_ in zips] 
 	f1s = [f1 for _,_,f1 in zips] 
 	plt.subplot(1,2,1)
-	plt.plot(fns,scs,color=COLORS[1],label=F_UF)
+	plt.plot(fns,scs,color=COLORS[2],label=F_UF)
 	plt.subplot(1,2,2)
-	plt.plot(fns,f1s,color=COLORS[1],label=F_UF)
+	plt.plot(fns,f1s,color=COLORS[2],label=F_UF)
+	# plot for backward variance threshold
 	scs = []
 	f1s = []
 	fns = []
@@ -141,9 +158,9 @@ if __name__ == "__main__":
 		scs.append(sc)
 		f1s.append(f1)
 	plt.subplot(1,2,1)
-	plt.plot(fns,scs,color=COLORS[2],label=B_VT)
+	plt.plot(fns,scs,color=COLORS[3],label=B_VT)
 	plt.subplot(1,2,2)
-	plt.plot(fns,f1s,color=COLORS[2],label=B_VT)
+	plt.plot(fns,f1s,color=COLORS[3],label=B_VT)
 	# plot for backward_select_from_model
 	zips = []
 	for idx, paras in enumerate(labels[B_SFM]):
@@ -156,16 +173,17 @@ if __name__ == "__main__":
 	scs = [sc for _,sc,_ in zips] 
 	f1s = [f1 for _,_,f1 in zips] 
 	plt.subplot(1,2,1)
-	plt.plot(fns,scs,color=COLORS[3],label=B_SFM)
+	plt.plot(fns,scs,color=COLORS[4],label=B_SFM)
 	plt.legend(fontsize='xx-large')
 	plt.title("feature selection score")
 	plt.subplot(1,2,2)
-	plt.plot(fns,f1s,color=COLORS[3],label=B_SFM)
+	plt.plot(fns,f1s,color=COLORS[4],label=B_SFM)
 	plt.legend(fontsize='xx-large')
 	plt.title("feature selection f1-score")
 	plt.show()
 
 
+	'''
 	# plot for forward_univariable_feature
 	zips = []
 	for idx, paras in enumerate(labels[F_UF]):
@@ -215,7 +233,6 @@ if __name__ == "__main__":
 	plt.xlabel("feature numbers")
 	plt.show()
 
-
 	# plot for backward_select_from_model
 	zips = []
 	for idx, paras in enumerate(labels[B_SFM]):
@@ -239,3 +256,4 @@ if __name__ == "__main__":
 	plt.ylabel("f1-score")
 	plt.xlabel("feature numbers")
 	plt.show()
+	'''

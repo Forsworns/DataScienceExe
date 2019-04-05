@@ -1,21 +1,21 @@
-from sklearn.svm import SVC, LinearSVC
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import f1_score
+from operator import methodcaller
 
+from distance import *
 from load_data import load_data
 from pre_process import pre_process
 from sl_rm import *
 from configs import *
 
-def 
+def KNN_recommend(**NN_paras):
+    if NN_paras == {}:
+        NN_paras = {'n_neighbors':2,'algorithm':'kd_tree'}
+    return KNeighborsClassifier(NN_paras)
 
-def SVM_recommend(**SVM_paras):
-    if SVM_paras == {}:
-        SVM_paras = {'C': 0.01, 'max_iter': 2000}
-    return LinearSVC(**SVM_paras)
-
-def SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, paras={}, **SVM_paras):
-    if SVM_paras == {}:
-        SVM_paras = {'C': 0.01, 'max_iter': 2000}
+def KNN_recommend_run(model_name, X_train, X_test, y_train, y_test, paras={}, **SVM_paras):
+    if NN_paras == {}:
+        NN_paras = {'n_neighbors':2,'algorithm':'kd_tree'}
     if paras == {}:
         paras.update(SVM_paras)
     result = load_result(model_name, paras)
@@ -43,9 +43,9 @@ def SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, paras={}, **
         return clf
 
 def SVM_compare_run(model_name, X_train, X_test, y_train, y_test, paras={}, **SVM_paras):
-    # 统一用于后续实验比较的SVM，提供前六个参数
-    if SVM_paras == {}:
-        SVM_paras = {'C': 2, 'kernel': 'rbf', 'decision-function-shape': 'ovo'}
+    # 确定KNN的metric和近邻数目
+    if NN_paras == {}:
+        NN_paras = {'n_neighbors':2,'algorithm':'kd_tree'}
     if paras == {}:
         paras.update(SVM_paras)
     result = load_result(model_name, paras)
@@ -73,7 +73,7 @@ def SVM_compare_run(model_name, X_train, X_test, y_train, y_test, paras={}, **SV
         return clf
 
 
-def SVM_base(X, y):
+def KNN_run(X, y):
     # model_name为采用的降维方法，X为降维后的feature数据
     X_train, X_test, y_train, y_test = pre_process(X, y)
     for d in DECI_FUNCS:
@@ -85,6 +85,17 @@ def SVM_base(X, y):
 
 
 if __name__ == "__main__":
-    model_name = BASELINE
     X, y = load_data()
-    SVM_base(X, y)
+    X_train, X_test, y_train, y_test = pre_process(X,y)
+    random_P = np.random.rand([1,X_train])
+    random_M = random_P.T*random_P
+    dist_obj = Distance(X_train,random_M)
+    for dist_func in DIST_LIST:
+        metric = methodcaller(dist_func)(dist_obj)
+        clf = KNeighborsClassifier(n_neighbors=5,algorithm='auto',metric=metric)
+        clf.fit(X_train,y_train)
+        y_pred = clf.predict(X_test)
+        sc = clf.score(X_test, y_test)
+        # unweighted mean of metrics for labels
+        f1_sc = f1_score(y_test, y_pred, average='macro')
+        result = {'score': sc, 'f1_score': f1_sc}

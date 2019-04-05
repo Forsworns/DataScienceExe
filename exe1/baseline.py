@@ -78,9 +78,10 @@ def SVM_base(X, y):
         for k in KERNELS:
             for C in CS:
                 SVM_compare_run(COMPARE, X_train, X_test, y_train, y_test, paras={}, C=C, kernel=k, decision_function_shape=d)
-    ''' for C in CS:
-        SVM_recommend_run(BASELINE, X_train, X_test, y_train, y_test, paras={}, C=C, max_iter=2000) '''
-
+            '''
+            for C in CS:
+                SVM_recommend_run(BASELINE, X_train, X_test, y_train, y_test, paras={}, C=C)
+            '''
 
 if __name__ == "__main__":
     model_name = BASELINE

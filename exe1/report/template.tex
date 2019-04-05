@@ -321,30 +321,142 @@ The ROC is kind a curve that measure the ability of classifier. Recall the true 
 \end{equation} 
 The axis of ROC is labelled by FPR and TPR. The AUC won't larger than $1$, since the FPR and TPR are both smaller than $1$. A good classifier is with lower FPR and higher TPR. That is, the AUC of the ROC should be as large as possible. So we first calculate the AUC\_ROC of every feature independently, then select features with higher AUC\_ROC values. 
 
+The algorithm is similar to the SFM method above, just replace the weighting score with AUC\_ROC. 
+
 \subsection{Genetic Algorithm}
 The AwA2 dataset is so large that we can't run genetic algorithm (GA) directly on it. But we still analysis it and test it on a part of the AwA2 dataset. We think GA is not a good idea under this circumstance, because of the fact that it need to utilize too much calculation resource considering the frequent assessment of gene fitness and crossing over. What's more, an encoded gene (here we encode a gene with one-hot code of features) is too long, it doesn't solve the combination explosion problem even we can reduce the searching space slightly with fitness function in GA. Moreover, how to define a good fitness function is another knotty problem.
+
+\subsubsection{Experiment result and analysis}
+The feature selection experiments were carried on the complete AwA2 dataset. We changed the number of selected features or other parameters to control the degree of the reduction, and then train linear SVMs on these reduction results. The criterions for the SVM predictions, as mentioned before, are the f1-score and mean accuracy. The comparison is shown in Figure~(\ref{fig:complete}). The red line is the linear SVM baseline.
+\begin{figure}
+	\label{fig:complete}
+	\caption{Feature selection.}
+	\includegraphics[width=\linewidth]{figs/feature_selection.png}
+\end{figure}
 
 
 \section{Feature projection}
 \label{sec:projection}
+\subsection{Principal Component Analysis}
+\subsubsection{Theory of PCA}
+The process of PCA can be summarized as a linear mapping of feature vectors to a lower-dimensional space, where the linear correlation among variables are minimized, in the lower-dimensional space the features are almost independent with others and thus could make the classification easier and avoid the overfitting problem. To achieve such low-dimensional independent features, there are two ways, the first way is to find the maximum variance direction as our new main dimension since different features are very different in this direction. The other way is try to minimize the reconstruction error since after pca we will lose some data and we wan't to preserve as many data as possible. However these two methods are equivalent iin mathematics.
+
+Consider $n$ feature vectors (which is37322) each of dimension $p$ (which is 2048 in our project), whole PCA process is as follows:
+\begin{enumerate}
+	\item Centralize our data to make the average value of each feature become 0
+	\begin{equation}
+	x_i =x_i- \frac{1}{n} \sum_{i=1}^n x_i\label{eq:mean}
+	\end{equation}
+	
+	\item Calculate the covariance matrix $C$ from the samples with
+	\begin{equation}
+	C = \frac{1}{n-1} \sum_{i=1}^n x_i x_i^T - u u^T \label{eq:cx}
+	\end{equation}
+	
+	\item Compute the eigenvectors and eigenvalues of the covariance matrix $C$.
+	\begin{equation}
+	V^T CV = D \label{eq:eig}
+	\end{equation}
+	where the matrix $V$ consists of eigenvectors which diagonalizes the covariance matrix $C$, and $D$ is the diagonal matrix of eigenvalues of $C$.
+	
+	\item Rearrange the eigenvectors and eigenvalues in a way that the columns of the eigenvector matrix $V$ and eigenvalue matrix $D$ are sorted in order of decreasing eigenvalue. The eigenvalues represent the distribution of the source data's energy among each of the eigenvectors, where the eigenvectors form a basis for the data.
+	
+	\item Select the first $k$ columns of $V$ as the $p \times k$ matrix $W$, 
+	
+	\item Project the original data onto the new basis. After reduced the dimension of our data, we can move to the classification part.
+	\begin{equation}
+	t_i = W^T (x_i - u)\label{eq:proj}
+	\end{equation}
+	
+\end{enumerate}
+\subsubsection{Experiment result and analysis}
+We have used sk-learn library of python when doing our PCA. We have tried many components in this experiment and finally we get the final result which is shown in the table \ref{tab:pca}. One main problem is that no matter how we adjust our $k$, our result is always not as good as the baseline. After analysis, we found that this is because the features we use are not raw features, and they come from the ResNet101, which means they have already been processed by the network. So, we think all of these features contains some kind of information which is essential for the classification, and there is little redundant feature. Our PCA process will discard some of them to achieve a lower-dimensional feature, so the result will be slightly worse than the baseline. This explains why that when the number of $k$ (the dimension of our new feature vector) is very high, the performance is almost as good as the baseline, and when $k$ is relatively small, the performance of the pca will become quite bad. So, after trying we found when $k$ is about 500, the PCA can get the best performance which means it can use less features to achieve the best SVM classification accuracy . More details are shown in \ref{fig:pca_score} .
+\begin{table}
+	\centering
+	\caption{Performance with different k in PCA}
+	\label{tab:pca}
+	\begin{tabular}{lccccccccccc}
+		
+		\specialrule{0em}{1pt}{1pt}
+		k-num&1024 &640&576&434&256&128&64&32&16&8&2\\
+		\hline
+		\hline
+		\specialrule{0em}{1pt}{1pt}
+		score &0.922&0.925&0.924&0.922 &0.923&0.914&0.897&0.861&0.776&0.614&0.190\\
+		\hline
+		\specialrule{0em}{1pt}{1pt}
+		F1-score &0.892&0.894&0.893&0.890 &0.889&0.869&0.840&0.764&0.652&0.460&0.074\\
+		
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.45\linewidth]{figs/pca2.png}
+	\caption{PCA performance with different k }
+	\label{fig:pca_score}
+\end{figure}
+
+
+
+\subsection{Linear Discriminant Analysis}
+\subsubsection{Theory of LDA}
+LDA is the Linear Discriminant Analysis, which is similar to PCA since both of them are feature projection methods and both of them try to convert the original high-dimensional feature into a new low-dimensional space. But there are some differences between them. LDA want to find a low-dimensional space which can maximize the class separation of the samples, thus it needs the label of each sample to reduce the dimensionality. And the number of labels will have great effect on the final result of LDA. The computational procedurel of LDA is as follows.
+
+Consider $n$ feature vectors (which is37322) each of dimension $p$ (which is 2048 in our project) and there are 50 labels in total, 
+\begin{enumerate}
+	\item Calculate the scatter matrix $S_w$ of each class.
+	
+	\item Calculate the scatter matrix $S_w$  between different class.
+	
+	\item Calculate $S^{-1}_wS_b$ and compute the eigenvectors and eigenvalues of it just like PCA
+	
+	\item Rearrange the eigenvectors and eigenvalues in a way that the columns of the eigenvector matrix $V$ and eigenvalue matrix $D$ are sorted in order of decreasing eigenvalue. The eigenvalues represent the distribution of the source data's energy among each of the eigenvectors, where the eigenvectors form a basis for the data.
+	
+	\item Select the first $k$ columns of $V$ as the $p \times k$ matrix $W$, 
+	
+	\item Project the original data onto the new basis. 
+	\begin{equation}
+	t_i = W^T x_i \label{eq:proj}
+	\end{equation}
+	
+\end{enumerate}
+
+\subsubsection{Experiment result and analysis}
+We have used sk-learn library of python to do LDA. We tried a lot of components of $k$ when finding the best setting of LDA. We found that when $k$ is close to the number of label classes (which is 50 in this dataset), the result will be good. However, when $k$ becomes bigger than 50., the result will have no improvement. We thought it's just because we are creating our new space based on our feature classes and when $k$ is bigger than 50, there is no space for us to further improve the class separation. When $k$ is small, similar to PCA, the performance of our SVM will become quite bad, it is also obvious since it have lost a lot of information. Similar to PCA, since LDA discarded some information compared with the original feature, our final result is slightly worse than the baseline. More details are shown in \ref{fig:lda_score}.
+\begin{table}
+	\centering
+	\caption{Performance with different k in LDA}
+	\label{tab:pca}
+	\begin{tabular}{lccccccccccc}
+		
+		\specialrule{0em}{1pt}{1pt}
+		k-num&2&4&8&12&16&24&32&40&48&50&58\\
+		\hline
+		\hline
+		\specialrule{0em}{1pt}{1pt}
+		score &0.197&0.327&0.497&0.630 &0.698&0.814&0.861&0.900&0.923&0.923&0.923\\
+		\hline
+		\specialrule{0em}{1pt}{1pt}
+		F1-score &0.085&0.185&0.328&0.453 &0.531&0.667&0.745&0.818&0.884&0.893&0.893\\
+		
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.45\linewidth]{figs/lda.png}
+	\caption{LDA performance with different k }
+	\label{fig:lda_score}
+\end{figure}
 
 \section{Feature learning}
 \label{sec:learning}
 
-\section{Discussion}
-\label{sec:discussion}
-\subsection{Reduction on the complete dataset}
-Most dimensionality reduction experiments were carried on the complete AwA2 dataset. We changed the number of selected features or other parameters to control the degree of the reduction, and then train linear SVMs on these reduction results. The criterions for the SVM predictions, as mentioned before, are the f1-score and mean accuracy. The comparison is shown in Figure~(\ref{fig:complete}). The red line is the linear SVM baseline.
-  \begin{figure}
-  	\label{fig:complete}
-  	\caption{Comparison on the AwA2 dataset.}
-  	\includegraphics[width=\linewidth]{figs/feature_selection.png}
-  \end{figure}
-
-\subsection{Reduction on the smaller dataset}
-As mentioned before, the AwA2 dataset is too large for some reduction methods, so we made experiments on a smaller dataset to verify the effectiveness of these methods. This smaller dataset was selected from the AwA2 dataset.
-
 \section{Conclusion}
+We implements several algorithms to reduce the dimensionality and compare them with a uniform baseline. We can found that the result of PCA is similar to some of the feature selection methods, while the LDA gives the best results. As for the learning methods, they need more time to train a model than selection and projection methods. So we think that on the AwA2 dataset, the best dimensionality reduction method is LDA.
 
 \bibliographystyle{unsrt}  
 \bibliography{references}
