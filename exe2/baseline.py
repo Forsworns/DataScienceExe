@@ -2,11 +2,13 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import f1_score
 from operator import methodcaller
 
-from distance import *
 from load_data import load_data
 from pre_process import pre_process
 from sl_rm import *
 from configs import *
+
+def cosine(x,y):
+	return np.dot(x,y)/np.linalg.norm(x,ord=2)/np.linalg(y,ord=2)
 
 def KNN_recommend(**NN_paras):
 	if NN_paras == {}:
@@ -50,7 +52,10 @@ def KNN_comapre_run(dist_obj, X_train, X_test, y_train, y_test):
 			metric_params = {}
 			if d == "minkowski":
 				metric_params.update({'p':3})
-			KNN_recommend_run(COMPARE, X_train, X_test, y_train, y_test, paras={'n':n,'m':metric,'p':metric_params}, algorithm='kd_tree', n_neighbors=n, metric=metric,metric_params=metric_params)
+			if d == "cosine":
+				d = "pyfunc"
+				metric_params.update({'func':cosine})
+			KNN_recommend_run(COMPARE, X_train, X_test, y_train, y_test, paras={'n':n,'m':d,'p':metric_params}, algorithm='auto', n_neighbors=n, metric=d,metric_params=metric_params)
 
 
 if __name__ == "__main__":
