@@ -1,6 +1,6 @@
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import f1_score
-from operator import methodcaller
+from sklearn.feature_selection import VarianceThreshold
 
 from load_data import load_data
 from pre_process import pre_process
@@ -8,7 +8,10 @@ from sl_rm import *
 from configs import *
 
 def cosine(x,y):
-	return np.dot(x,y)/np.linalg.norm(x,ord=2)/np.linalg(y,ord=2)
+	s = np.linalg.norm(x,ord=2)*np.linalg.norm(y,ord=2)
+	if s==0:
+		return 0
+	return np.dot(x,y)/s
 
 def KNN_recommend(**NN_paras):
 	if NN_paras == {}:
@@ -45,10 +48,9 @@ def KNN_recommend_run(model_name, X_train, X_test, y_train, y_test, paras={}, **
 		return clf
 
 
-def KNN_comapre_run(dist_obj, X_train, X_test, y_train, y_test):
+def KNN_comapre_run(X_train, X_test, y_train, y_test):
 	for d in DIST_LIST:
 		for n in NEIGHBORS:
-			metric = methodcaller(d)(dist_obj)
 			metric_params = {}
 			if d == "minkowski":
 				metric_params.update({'p':3})
@@ -60,11 +62,12 @@ def KNN_comapre_run(dist_obj, X_train, X_test, y_train, y_test):
 
 if __name__ == "__main__":
 	X, y = load_data()
+	selector = VarianceThreshold(threshold=1) # 可能降维后会好些？
+	X_ = selector.fit_transform(X)
 	X_train, X_test, y_train, y_test = pre_process(X,y)
 	random_M = np.array(load_result("M"))
 	if random_M is None:
 		random_P = np.random.rand(1,X_train.shape[0])
 		random_M = random_P.T*random_P
 		save_result("M")
-	dist_obj = Distance(X_train,random_M)
-	KNN_comapre_run(dist_obj, X_train, X_test, y_train, y_test)
+	KNN_comapre_run(X_train, X_test, y_train, y_test)
