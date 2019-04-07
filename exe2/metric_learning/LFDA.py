@@ -1,18 +1,17 @@
 import sys
 sys.path.append('..')
-from metric_learn import Covariance
+from metric_learn import LFDA
 from configs import *
 from baseline import KNN_recommend_run
 from load_data import load_data
 from pre_process import pre_process
 import os
 
-# baseline, doesn't learn, just calculate the covariances
 if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
-    cov =  Covariance().fit(X)
-    X = cov.transform(X)
+    lfda =  LFDA(num_constraints=200)
+    lfda.fit(X)
+    X = lfda.transform(X)
     X_train, X_test, y_train, y_test = pre_process(X,y)
-    KNN_recommend_run("Covariance",X_train,X_test,y_train,y_test,paras={})
-
+    KNN_recommend_run("LFDA",X_train,X_test,y_train,y_test,paras={})

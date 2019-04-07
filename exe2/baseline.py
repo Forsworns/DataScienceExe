@@ -7,6 +7,7 @@ from pre_process import pre_process
 from sl_rm import *
 from configs import *
 
+
 def cosine(x,y):
 	s = np.linalg.norm(x,ord=2)*np.linalg.norm(y,ord=2)
 	if s==0:
@@ -15,12 +16,12 @@ def cosine(x,y):
 
 def KNN_recommend(**NN_paras):
 	if NN_paras == {}:
-		NN_paras = {'n_neighbors':2,'algorithm':'kd_tree'}
+		NN_paras = {'n_neighbors':BSET_N,'algorithm':'auto'}
 	return KNeighborsClassifier(NN_paras)
 
 def KNN_recommend_run(model_name, X_train, X_test, y_train, y_test, paras={}, **NN_paras):
 	if NN_paras == {}:
-		NN_paras = {'n_neighbors':2,'algorithm':'kd_tree'}
+		NN_paras = {'n_neighbors':BSET_N,'algorithm':'auto'}
 	if paras == {}:
 		paras.update(NN_paras)
 	result = load_result(model_name, paras)
@@ -31,20 +32,18 @@ def KNN_recommend_run(model_name, X_train, X_test, y_train, y_test, paras={}, **
 			clf = KNeighborsClassifier(**NN_paras)
 			clf.fit(X_train, y_train)
 			save_model(clf, model_name, paras)
-		y_pred = clf.predict(X_test)
 		sc = clf.score(X_test, y_test)
 		# unweighted mean of metrics for labels
-		f1_sc = f1_score(y_test, y_pred, average='macro')
-		result = {'score': sc, 'f1_score': f1_sc}
+		result = {'score': sc}
 		save_result(result, model_name, paras)
-		print("{} with {}: score is {}, f1_score is {}".format(
-			model_name, paras, sc, f1_sc))
+		print("{} with {}: score is {}".format(
+			model_name, paras, sc))
 		return clf
 	else:
 		clf = load_model(model_name, paras)
 		sc, f1_sc = result.values()
-		print("{} with {}: score is {}, f1_score is {}".format(
-			model_name, paras, sc, f1_sc))
+		print("{} with {}: score is {}".format(
+			model_name, paras, sc))
 		return clf
 
 
@@ -70,4 +69,4 @@ if __name__ == "__main__":
 		random_P = np.random.rand(1,X_train.shape[0])
 		random_M = random_P.T*random_P
 		save_result("M")
-	KNN_comapre_run(X_train, X_test, y_train, y_test)
+	KNN_comapre_run(X_train, X_train, y_train, y_train)
