@@ -20,14 +20,14 @@ def load_model(model_name, paras):
     return model
 
 
-def save_result(content, model_name, paras):
+def save_result(content, model_name, paras={}):
     # content是一个模型评估记录, 后两个参数同上
     result_name = build_file_name(model_name, paras, RESULT)
     with open(result_name, 'w') as f:
         f.write(json.dumps(content))
 
 
-def load_result(model_name="", paras="", file_name=""):
+def load_result(model_name="", paras={}, file_name=""):
     if file_name == "":
         result_name = build_file_name(model_name, paras, RESULT)
     else:

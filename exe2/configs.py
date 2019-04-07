@@ -3,9 +3,8 @@ import numpy as np
 # file type
 MODEL = "models"
 RESULT = "results"
-
-# distance
-DIST_LIST = ['euclidean','manhattan','chebyshev','minkowski_3','minkowski_4','mahalanobis','canberra','braycurtis','cosine']
+COMPARE = "compare"
+BASELINE = "baseline"
 
 # test train split
 TEST_SIZE = 0.4
@@ -15,11 +14,9 @@ Y_TRAIN = "data/train_y.npy"
 X_TEST = "data/test_x.npy"
 Y_TEST = "data/test_y.npy"
 
-# paras for SVM base
-DECI_FUNCS = ['ovo', 'ovr']
-KERNELS = ['linear', 'poly', 'rbf', 'sigmoid']
-KERNELS_MAP = {'linear':0, 'poly':1, 'rbf':2, 'sigmoid':3}
-CS = [0.01, 0.04, 0.07, 0.1, 0.3, 0.5, 1, 2]
+# paras for KNN base
+DIST_LIST = ['euclidean','manhattan','chebyshev','minkowski'] #,'cosine'
+NEIGHBORS = [i*2000 for i in range(1,10)]
 
 COLORS = np.array(['#FF3333',  # red
                    '#0198E1',  # blue
