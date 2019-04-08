@@ -8,10 +8,11 @@ from pre_process import pre_process
 import os
 
 if __name__ == '__main__':
-    os.chdir('..')
-    X, y = load_data()
-    itml =  ITML_Supervised(num_constraints=200)
-    itml.fit(X)
-    X = itml.transform(X)
-    X_train, X_test, y_train, y_test = pre_process(X,y)
-    KNN_recommend_run("ITML",X_train,X_test,y_train,y_test,paras={})
+	os.chdir('..')
+	X, y = load_data()
+	X_train, X_test, y_train, y_test = pre_process(X,y)
+	itml =  ITML_Supervised(num_constraints=200)
+	itml.fit(X_train)
+	X_train = itml.transform(X_train)
+	X_test = itml.transform(X_test)
+	KNN_recommend_run("ITML",X_train,X_test,y_train,y_test,paras={})

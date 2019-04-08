@@ -10,8 +10,9 @@ import os
 if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
-    rca =  RCA_Supervised(num_constraints=200)
-    rca.fit(X,y)
-    X = rca.transform(X)
     X_train, X_test, y_train, y_test = pre_process(X,y)
+    rca =  RCA_Supervised(num_constraints=200)
+    rca.fit(X_train,y_train)
+    X_train = rca.transform(X_train)
+    X_test = rca.transform(X_test)
     KNN_recommend_run("RCA",X_train,X_test,y_train,y_test,paras={})

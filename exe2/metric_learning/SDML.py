@@ -10,8 +10,9 @@ import os
 if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
-    sdml =  SDML_Supervised(num_constraints=200)
-    sdml.fit(X,y)
-    X = sdml.transform(X)
     X_train, X_test, y_train, y_test = pre_process(X,y)
+    sdml =  SDML_Supervised(num_constraints=200)
+    sdml.fit(X_train,y_train)
+    X_train = sdml.transform(X_train)
+    X_test = sdml.transform(X_test)
     KNN_recommend_run("SDML",X_train,X_test,y_train,y_test,paras={})

@@ -10,8 +10,9 @@ import os
 if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
-    nca =  NCA(max_iter=1000,learn_rate=1e-6)
-    nca.fit(X,y)
-    X = nca.transform(X)
     X_train, X_test, y_train, y_test = pre_process(X,y)
+    nca =  NCA(max_iter=1000,learn_rate=1e-6)
+    nca.fit(X_train,y_train)
+    X_train = nca.transform(X_train)
+    X_test = nca.transform(X_test)
     KNN_recommend_run("NCA",X_train,X_test,y_train,y_test,paras={})

@@ -10,8 +10,9 @@ import os
 if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
-    lmnn =  LMNN(k=5,learn_rate=1e-6)
-    lmnn.fit(X,y)
-    X = lmnn.transform(X)
     X_train, X_test, y_train, y_test = pre_process(X,y)
+    lmnn =  LMNN(k=5,learn_rate=1e-6)
+    lmnn.fit(X_train,y_train)
+    X_train = lmnn.transform(X_train)
+    X_test = lmnn.transform(X_test)
     KNN_recommend_run("LMNN",X_train,X_test,y_train,y_test,paras={})

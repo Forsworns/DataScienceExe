@@ -10,8 +10,9 @@ import os
 if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
-    lfda =  LFDA(num_constraints=200)
-    lfda.fit(X)
-    X = lfda.transform(X)
     X_train, X_test, y_train, y_test = pre_process(X,y)
+    lfda =  LFDA(num_constraints=200)
+    lfda.fit(X_train)
+    X_train = lfda.transform(X_train)
+    X_test = lfda.transform(X_test)
     KNN_recommend_run("LFDA",X_train,X_test,y_train,y_test,paras={})

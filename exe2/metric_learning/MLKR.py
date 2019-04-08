@@ -10,8 +10,9 @@ import os
 if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
-    mlkr =  MLKR
-    mlkr.fit(X,y)
-    X = mlkr.transform(X)
     X_train, X_test, y_train, y_test = pre_process(X,y)
+    mlkr =  MLKR()
+    mlkr.fit(X_train,y_train)
+    X_train = mlkr.transform(X_train)
+    X_test = mlkr.transform(X_test)
     KNN_recommend_run("MLKR",X_train,X_test,y_train,y_test,paras={})

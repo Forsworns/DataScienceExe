@@ -10,8 +10,9 @@ import os
 if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
-    lsml =  LSML_Supervised(num_constraints=200)
-    lsml.fit(X,y)
-    X = lsml.transform(X)
     X_train, X_test, y_train, y_test = pre_process(X,y)
+    lsml =  LSML_Supervised(num_constraints=200)
+    lsml.fit(X_train,y_train)
+    X_train = lsml.transform(X_train)
+    X_test = lsml.transform(X_test)
     KNN_recommend_run("LSML",X_train,X_test,y_train,y_test,paras={})
