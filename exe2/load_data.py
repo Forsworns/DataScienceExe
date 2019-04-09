@@ -21,7 +21,6 @@ def load_feature():
 def load_data():
     X = load_feature()
     y = load_label()
-    
     return [X, y]
 
 def load_data_small():

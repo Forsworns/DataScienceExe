@@ -24,9 +24,9 @@ def KNN_recommend_run(model_name, X_train, X_test, y_train, y_test, bStore=False
 	if paras == {}:
 		paras.update(NN_paras)
 	result = load_result(model_name, paras)
-	if result is None or not bStore:
+	if result is None:
 		clf = load_model(model_name, paras)
-		if clf is None or not bStore:
+		if clf is None:
 			print("can't find clf",model_name)
 			clf = KNeighborsClassifier(**NN_paras)
 			print(clf)
