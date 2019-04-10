@@ -18,4 +18,4 @@ if __name__ == "__main__":
 	pca.fit(X_train,y_train)
 	X_train = pca.transform(X_train)
 	X_test = pca.transform(X_test)
-	KNN_recommend_run(X_train, X_test, y_train, y_test,model_name="PCA")
+	KNN_recommend_run("PCA",X_train, X_test, y_train, y_test)

@@ -11,7 +11,7 @@ if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
     X_train, X_test, y_train, y_test = pre_process(X,y)
-    rca =  RCA_Supervised(num_constraints=200)
+    rca =  RCA_Supervised(num_chunks=30, chunk_size=2)
     rca.fit(X_train,y_train)
     X_train = rca.transform(X_train)
     X_test = rca.transform(X_test)

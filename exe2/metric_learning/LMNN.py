@@ -11,7 +11,7 @@ if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
     X_train, X_test, y_train, y_test = pre_process(X,y)
-    lmnn =  LMNN(k=5,learn_rate=1e-6)
+    lmnn =  LMNN(k=5,learn_rate=0.001)
     lmnn.fit(X_train,y_train)
     X_train = lmnn.transform(X_train)
     X_test = lmnn.transform(X_test)

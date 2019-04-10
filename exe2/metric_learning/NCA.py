@@ -11,7 +11,7 @@ if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
     X_train, X_test, y_train, y_test = pre_process(X,y)
-    nca =  NCA(max_iter=1000,learn_rate=1e-6)
+    nca =  NCA(max_iter=1000,learn_rate=0.01)
     nca.fit(X_train,y_train)
     X_train = nca.transform(X_train)
     X_test = nca.transform(X_test)
