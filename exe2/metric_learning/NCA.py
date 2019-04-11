@@ -12,7 +12,7 @@ if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
     X_train, X_test, y_train, y_test = pre_process(X,y)
-    nca =  NCA(max_iter=1000,verbose=True)
+    nca =  NCA(max_iter=100,verbose=True)
     nca.fit(X_train,y_train)
     X_train = nca.transform(X_train)
     X_test = nca.transform(X_test)
