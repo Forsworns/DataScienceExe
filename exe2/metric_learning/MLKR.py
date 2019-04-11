@@ -11,7 +11,7 @@ if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
     X_train, X_test, y_train, y_test = pre_process(X,y)
-    mlkr =  MLKR()
+    mlkr =  MLKR(verbose=True)
     mlkr.fit(X_train,y_train)
     X_train = mlkr.transform(X_train)
     X_test = mlkr.transform(X_test)

@@ -11,7 +11,7 @@ if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
     X_train, X_test, y_train, y_test = pre_process(X,y)
-    lsml =  LSML_Supervised(num_constraints=200)
+    lsml =  LSML_Supervised(num_constraints=200,verbose=True)
     lsml.fit(X_train,y_train)
     X_train = lsml.transform(X_train)
     X_test = lsml.transform(X_test)

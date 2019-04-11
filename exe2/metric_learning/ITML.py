@@ -11,7 +11,7 @@ if __name__ == '__main__':
 	os.chdir('..')
 	X, y = load_data()
 	X_train, X_test, y_train, y_test = pre_process(X,y)
-	itml =  ITML_Supervised(num_constraints=200)
+	itml =  ITML_Supervised(num_constraints=200,verbose=True)
 	itml.fit(X_train,y_train)
 	X_train = itml.transform(X_train)
 	X_test = itml.transform(X_test)

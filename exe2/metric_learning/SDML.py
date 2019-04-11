@@ -11,7 +11,7 @@ if __name__ == '__main__':
     os.chdir('..')
     X, y = load_data()
     X_train, X_test, y_train, y_test = pre_process(X,y)
-    sdml =  SDML_Supervised(num_constraints=200)
+    sdml =  SDML_Supervised(num_constraints=200,verbose=True)
     sdml.fit(X_train,y_train)
     X_train = sdml.transform(X_train)
     X_test = sdml.transform(X_test)

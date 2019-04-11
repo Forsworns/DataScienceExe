@@ -1,7 +1,5 @@
 import numpy as np
 
-BSET_N = 7
-
 # file type
 MODEL = "models"
 RESULT = "results"
@@ -15,10 +13,6 @@ X_TRAIN = "data/train_x.npy"
 Y_TRAIN = "data/train_y.npy"
 X_TEST = "data/test_x.npy"
 Y_TEST = "data/test_y.npy"
-
-# paras for KNN base
-DIST_LIST = ['euclidean','manhattan','chebyshev','minkowski','cosine']
-NEIGHBORS = [i for i in range(1,15)]
 
 COLORS = np.array(['#FF3333',  # red
                    '#0198E1',  # blue
