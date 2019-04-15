@@ -18,4 +18,4 @@ if __name__ == "__main__":
 	se.fit(X_train,y_train)
 	X_train = se.transform(X_train)
 	X_test = se.transform(X_test)
-	KNN_recommend_run(X_train, X_test, y_train, y_test,model_name="LDA")
+	KNN_recommend_run("SE", X_train, X_test, y_train, y_test)

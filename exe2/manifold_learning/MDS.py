@@ -18,4 +18,4 @@ if __name__ == "__main__":
 	mds.fit(X_train,y_train)
 	X_train = mds.transform(X_train)
 	X_test = mds.transform(X_test)
-	KNN_recommend_run(X_train, X_test, y_train, y_test,model_name="LDA")
+	KNN_recommend_run("MDS",X_train, X_test, y_train, y_test)

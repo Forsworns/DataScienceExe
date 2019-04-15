@@ -18,4 +18,4 @@ if __name__ == "__main__":
 	tsne.fit(X_train,y_train)
 	X_train = tsne.transform(X_train)
 	X_test = tsne.transform(X_test)
-	KNN_recommend_run(X_train, X_test, y_train, y_test,model_name="LDA")
+	KNN_recommend_run("TSNE",sX_train, X_test, y_train, y_test)
