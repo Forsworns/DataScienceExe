@@ -31,7 +31,8 @@ def KNN_recommend_run(model_name, X_train, X_test, y_train, y_test, bStore=False
 			clf = KNeighborsClassifier(**NN_paras)
 			print(clf)
 			clf.fit(X_train, y_train)
-			save_model(clf, model_name, paras)
+			if bStore:
+				save_model(clf, model_name, paras)
 		sc = clf.score(X_test, y_test)
 		# unweighted mean of metrics for labels
 		result = {'score': sc}
