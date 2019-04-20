@@ -18,6 +18,7 @@ Y_TEST = "data/test_y.npy"
 
 # paras for KNN base
 DIST_LIST = ['euclidean','manhattan','chebyshev','minkowski','cosine']
+DIST_MAP = {'euclidean':0, 'manhattan':1, 'chebyshev':2, 'minkowski':3, 'cosine':4}
 NEIGHBORS = [i for i in range(1,15)]
 
 COLORS = np.array(['#FF3333',  # red
