@@ -59,13 +59,15 @@ if __name__ == "__main__":
 	compareLabel = labels[COMPARE]
 	compareData = contents[COMPARE]
 	plt.figure(figsize=(6, 6))
+	ax = plt.gca()
+	ax.yaxis.grid(color='gray', linestyle='-', linewidth=1,alpha=0.3)
 	for dist in DIST_LIST:
 		sc = [compareData[idx]['score'] for idx,item in enumerate(compareLabel) if item['m']==dist]
 		color = COLORS[DIST_MAP[dist]]
 		plt.plot(NEIGHBORS,sc,color=color,label=dist)
-		plt.title('Baseline score on the original dataset')
-		plt.ylabel("score")
-		plt.xlabel("neighbor number")
+		plt.title('Baseline score on the original dataset',fontsize=20)
+		plt.ylabel("score",fontsize=20)
+		plt.xlabel("neighbor number",fontsize=20)
 		plt.yticks(np.linspace(0,1,11))
 		plt.legend(fontsize='xx-large')
 	plt.show()

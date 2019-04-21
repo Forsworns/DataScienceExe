@@ -11,7 +11,9 @@ def curse():
 	e = 0.01
 	x = [100*i for i in  range(1,21)]
 	y = [1-(1-e)**(10*i) for i in range(1,21)]
+	# ax = plt.gca()
 	ax = fig.add_subplot(1,1,1)
+	ax.yaxis.grid(color='gray', linestyle='-', linewidth=1,alpha=0.3)
 	ax.plot(x,y)
 	plt.show()
 
@@ -37,19 +39,19 @@ def compute_dist(X):
 			zz.append(similarities[i,j])
 			if similarities[i,j]>-0.2 and similarities[i,j]<0.4:
 				num = num + 1
-	ax.plot(xx,yy,zz)
+	ax.scatter(xx,yy,zz)
 	print(num/similarities.shape[0]/similarities.shape[1])
 	ax.legend(loc='best')
 	plt.show()
 
 if __name__ == "__main__":
-	# curse()
+	curse()
 	X, y = load_data()
+	X_train, X_test, y_train, y_test = pre_process(X, y)
 
 	lda = LinearDiscriminantAnalysis(n_components=50)
 	lda.fit(X_train, y_train)
 	X_train = lda.transform(X_train)
 	X_test = lda.transform(X_test)
 	
-	X_train, X_test, y_train, y_test = pre_process(X, y)
 	compute_dist(X_train)

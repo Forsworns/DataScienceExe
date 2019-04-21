@@ -11,3 +11,6 @@ __pycache__
 *.blg
 *.bbl
 *.gz
+
+# dataset
+*.png
