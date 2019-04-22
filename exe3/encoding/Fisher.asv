@@ -1,13 +1,19 @@
 addpath('..')
 run('vl_setup')
 
-numFeatures = 5000 ;
-dimension = 2 ;
-data = rand(dimension,numFeatures) ;
+data_path = '.\results\siftLD\siftLD.mat';
+class_path = '.\results\siftLD\classes.mat';
+encodes_path = '\results\BOW\encodes.mat';
+lds = load(data_path);
+file_nums = load(class_path);
+numLabel = length(file_nums);
+numLD = 2343; % the local descriptor number in a figure
+
+
 
 % train a GMM
-numClusters = 50 ;
+numClusters = 300 ;
 [means, covariances, priors] = vl_gmm(data, numClusters);
 
 % ecoding by GMM (encoding length is 4*numclusters?)
-encoding = vl_fisher(data, means, covariances, priors);
+encoding = vl_fisher(fig, means, covariances, priors);
