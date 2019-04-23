@@ -1,5 +1,7 @@
 clear;
 clc;
+cd('..')
+
 % load the mat files and concatenate them
 bTest = true;
 sift_dir = '.\results\sift\';
@@ -18,34 +20,25 @@ lds = zeros(lengthLD,sum(numLD));
 file_nums = zeros(dir_num-2,1); % use this arr to remember the class
 k = 1;
 cursor = 1;
-f=1;
-for i= 1:dir_num % omit '.' and '..'
-    if strcmp(dir_list(i).name,'.')==1 || strcmp(dir_list(i).name,'..')==1
-        continue
-    end
-    sprintf('第%d组图片%s',i,dir_list(i).name);
-    
+for i= 3:dir_num % omit '.' and '..'
+    sprintf('第%d组图片%s',i-2,dir_list(i).name);
     if dir_list(i).isdir
         dir_path = [sift_dir,dir_list(i).name,'\'];
         file_list = dir(dir_path);
         if bTest
-            file_nums(f) = 10;
+            file_nums(i-2) = 10;
         else
-            file_nums(f) = length(file_list);
+            file_nums(i-2) = length(file_list);
         end
-        files_num = files_num + file_nums(f);
+        files_num = files_num + file_nums(i-2);
         % iterate to view every figure in each class
-        for j = 1:file_nums(f)
-            if strcmp(file_list(j).name,'.')==1 || strcmp(file_list(j).name,'..')==1
-                continue
-            end
-            file_path = [dir_path,file_list(j).name];
+        for j = 1:file_nums(i-2)
+            file_path = [dir_path,file_list(j+2).name];
             load(file_path,'d');
             lds(:,cursor:cursor+numLD(k)-1) = d;
             cursor = cursor+numLD(k);
             k = k+1;
         end
-        f = f+1;
     end
 end
 %% build the label file
