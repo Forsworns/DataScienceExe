@@ -20,7 +20,7 @@ load(numLD_path,'numLD'); % the local descriptor number in a figure
 %% train a GMM
 tic;
 numClusters = 100 ;
-[means, covariances, priors] = vl_gmm(data, numClusters);
+[means, covariances, priors] = vl_gmm(lds, numClusters);
 model_time = toc;
 
 %% ecoding by GMM (encoding length is 4*numclusters?)

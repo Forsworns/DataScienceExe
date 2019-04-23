@@ -5,7 +5,7 @@ addpath(genpath('..'))
 cd('..')
 run('vl_setup')
 
-bTest = true;
+bTest = false;
 numLD_path = '.\results\siftLD\numLD.mat';
 filesNum_path = '.\results\siftLD\filesNum.mat';
 dir_base = '.\data\Animals_with_Attributes2\JPEGImages\';

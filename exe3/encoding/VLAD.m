@@ -20,7 +20,7 @@ load(numLD_path,'numLD'); % the local descriptor number in a figure
 %% the clusters of local desciptors
 tic;
 numClusters = 100;
-centers = vl_kmeans(data, numClusters);
+centers = vl_kmeans(lds, numClusters);
 kdtree = vl_kdtreebuild(centers) ;
 model_time = toc;
 %% encoding (the length of encoding is 2*clusters)
@@ -33,13 +33,13 @@ for i=1:numLabel
         cursor = cursor+numLD(k);
         
         nn = vl_kdtreequery(kdtree, centers, fig) ;
-        assignments = zeros(numClusters,100);
+        assignments = zeros(numClusters,size(fig,2));
         % sub2ind() transforms sub-index to linear-index
         % nn is the nearest cluster neighbor, points should be assigned to this cluster
         assignments(sub2ind(size(assignments), nn, 1:length(nn))) = 1;
         
-        encoding = vl_vlad(data,centers,assignments);
-        save(sprintf('%s%d%d.mat',vlad_dir,i,j),'encoding');
+        encoding = vl_vlad(fig,centers,assignments);
+        save(sprintf('%s%d_%d.mat',vlad_dir,i,j),'encoding');
         k = k+1;
     end
 end
