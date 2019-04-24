@@ -21,6 +21,7 @@ if ~exist(siftLD_dir,'dir')
     mkdir(siftLD_dir)
 end
 %% 遍历目录
+tic;
 dir_list = dir(dir_base);
 dir_num = length(dir_list);
 sprintf('开始遍历图片共%d个文件夹',dir_num);
@@ -37,7 +38,7 @@ for i= 3:dir_num % omit '.' and '..'
         if bTest
             file_nums(i-2) = 10;
         else
-            file_nums(i-2) = length(file_list);
+            file_nums(i-2) = length(file_list)-2;
         end
         % iterate to view every figure in each class
         for j = 1:file_nums(i-2)
@@ -68,6 +69,7 @@ for i= 3:dir_num % omit '.' and '..'
     end
 end
 save(numLD_path,'numLD')
+sift_time = toc;
 
 
 
