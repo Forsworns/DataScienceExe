@@ -5,6 +5,7 @@ addpath(genpath('..'))
 cd('..')
 run('vl_setup')
 
+bReset = false;
 bTest = false;
 numLD_path = '.\results\siftLD\numLD.mat';
 filesNum_path = '.\results\siftLD\filesNum.mat';
@@ -43,21 +44,28 @@ for i= 3:dir_num % omit '.' and '..'
         % iterate to view every figure in each class
         for j = 1:file_nums(i-2)
             file_path = [dir_path,file_list(j+2).name];
-            image = imread(file_path);
-            % imshow(image) % show the figure
-           %% compute SIFT
-            if size(image,3)==3 
-                image = single(rgb2gray(image)); % transform to gray scale images to cal sift local desciptor
-            end 
-            [f,d] = vl_sift(image,'PeakThresh',10); % A frame is a disk of center f(1:2), scale f(3) and orientation f(4)
-            % a single sift local descriptor is of size 128X1
             data_dir = [sift_dir,dir_names{i-2}];
             if ~exist(data_dir,'dir')
                 mkdir(data_dir)
             end
-            data_path = [data_dir,'\',file_list(j+2).name,'.mat'];
-            save(data_path,'d')
-            numLD = [numLD,size(d,2)];
+            save_path = [data_dir,'\',file_list(j+2).name,'.mat'];
+            if ~exist(save_path,'file') || bReset
+                image = imread(file_path);
+                % imshow(image) % show the figure
+               %% compute SIFT
+                if size(image,3)==3 
+                    image = single(rgb2gray(image)); % transform to gray scale images to cal sift local desciptor
+                else
+                    image = single(image);
+                end 
+                [f,d] = vl_sift(image,'PeakThresh',10); % A frame is a disk of center f(1:2), scale f(3) and orientation f(4)
+                % a single sift local descriptor is of size 128X1
+                save(save_path,'d')
+                numLD = [numLD,size(d,2)];
+            else
+                load(save_path,'d')
+                numLD = [numLD,size(d,2)];
+            end
             %% visualization of the SIFT local descriptor
 %             perm = randperm(size(f,2));
 %             sel = perm(1:50);

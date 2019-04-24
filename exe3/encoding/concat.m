@@ -3,7 +3,7 @@ clc;
 cd('..')
 
 % load the mat files and concatenate them
-bTest = true;
+bTest = false;
 sift_dir = '.\results\sift\';
 dir_list = dir(sift_dir);
 dir_num = length(dir_list);
