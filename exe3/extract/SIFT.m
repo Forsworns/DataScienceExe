@@ -46,7 +46,9 @@ for i= 3:dir_num % omit '.' and '..'
             image = imread(file_path);
             % imshow(image) % show the figure
            %% compute SIFT
-            image = single(rgb2gray(image)); % transform to gray scale images to cal sift local desciptor
+            if size(image,3)==3 
+                image = single(rgb2gray(image)); % transform to gray scale images to cal sift local desciptor
+            end 
             [f,d] = vl_sift(image,'PeakThresh',10); % A frame is a disk of center f(1:2), scale f(3) and orientation f(4)
             % a single sift local descriptor is of size 128X1
             data_dir = [sift_dir,dir_names{i-2}];

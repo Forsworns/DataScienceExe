@@ -3,17 +3,6 @@ from sl_rm import load_result
 from configs import *
 import os
 
-'''
-# rename the files in the baseline_compare
-for _,_,files in os.walk('.'):
-	for file in files:
-		paras = file.split('decision_function_shape')
-		new_file = paras[0]+'decision-function-shape'+paras[1]
-		os.rename(file,new_file)
-'''
-
-
-
 
 if __name__ == "__main__":
 	# rename the files in the baseline_compare
@@ -57,12 +46,18 @@ if __name__ == "__main__":
 	print(contents)
 
 	compareLabel = labels[COMPARE]
+	print(compareLabel)
 	compareData = contents[COMPARE]
 	plt.figure(figsize=(6, 6))
 	ax = plt.gca()
 	ax.yaxis.grid(color='gray', linestyle='-', linewidth=1,alpha=0.3)
 	for dist in DIST_LIST:
-		sc = [compareData[idx]['score'] for idx,item in enumerate(compareLabel) if item['m']==dist]
+		sc = [0 for _ in range(1,15)]
+		for idx,item in enumerate(compareLabel):
+			if item['m']==dist:
+				print(item['n'])
+				sc[int(item['n'])-1] = compareData[idx]['score'] 
+		print(dist,"score is",sc)
 		color = COLORS[DIST_MAP[dist]]
 		plt.plot(NEIGHBORS,sc,color=color,label=dist)
 		plt.title('Baseline score on the original dataset',fontsize=20)
