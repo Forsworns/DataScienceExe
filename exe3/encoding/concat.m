@@ -28,17 +28,17 @@ for i= 3:dir_num % omit '.' and '..'
         if bTest
             file_nums(i-2) = 10;
         else
-            file_nums(i-2) = length(file_list);
+            file_nums(i-2) = length(file_list)-2;
         end
         files_num = files_num + file_nums(i-2);
         % iterate to view every figure in each class
-        for j = 1:file_nums(i-2)
-            file_path = [dir_path,file_list(j+2).name];
-            load(file_path,'d');
-            lds(:,cursor:cursor+numLD(k)-1) = d;
-            cursor = cursor+numLD(k);
-            k = k+1;
-        end
+%         for j = 1:file_nums(i-2)
+%             file_path = [dir_path,file_list(j+2).name];
+%             load(file_path,'d');
+%             lds(:,cursor:cursor+numLD(k)-1) = d;
+%             cursor = cursor+numLD(k);
+%             k = k+1;
+%         end
     end
 end
 %% build the label file
