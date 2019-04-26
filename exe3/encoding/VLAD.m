@@ -19,7 +19,7 @@ load(numLD_path,'numLD'); % the local descriptor number in a figure
 
 %% the clusters of local desciptors
 tic;
-numClusters = 100;
+numClusters = 20;
 centers = vl_kmeans(lds, numClusters);
 kdtree = vl_kdtreebuild(centers) ;
 model_time = toc;
