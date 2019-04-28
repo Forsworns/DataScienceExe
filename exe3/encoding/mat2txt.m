@@ -48,7 +48,7 @@ for i = 1:bow_len
     encoding_name = [bow_dir,bow_list{i}];
     load(encoding_name,'encoding');
     for j = 1:length(encoding)
-        fprintf(file,'%.4f',encoding(j));
+        fprintf(file,'%d ',encoding(j));
     end
     fprintf(file,"\r\n");
 end
@@ -59,7 +59,7 @@ for i = 3:vlad_len
     encoding_name = [vlad_dir,vlad_list{i}];
     load(encoding_name,'encoding');
     for j = 1:length(encoding)
-        fprintf(file,'%.4f',encoding(j));
+        fprintf(file,'%.4f ',encoding(j));
     end
     fprintf(file,"\r\n");
 end
@@ -70,7 +70,7 @@ for i = 3:fisher_len
     encoding_name = [fisher_dir,fisher_list{i}];
     load(encoding_name,'encoding');
     for j = 1:length(encoding)
-        fprintf(file,'%.4f',encoding(j));
+        fprintf(file,'%.4f ',encoding(j));
     end
     fprintf(file,"\r\n");
 end
