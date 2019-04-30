@@ -33,7 +33,7 @@ for i=1:numLabel
         cursor = cursor+numLD(k);
         
         encoding = vl_fisher(fig, means, covariances, priors);
-        save(sprintf('%s%d%d.mat',fisher_dir,i,j),'encoding');
+        save(sprintf('%s%d_%d.mat',fisher_dir,i,j),'encoding');
         k = k+1;
     end
 end

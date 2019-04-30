@@ -44,7 +44,7 @@ end
 labels = zeros(files_num,1);
 cursor = 1;
 for i = 1:length(file_nums)
-    labels(cursor:file_nums(i)) = i;
+    labels(cursor:cursor+file_nums(i)-1) = i;
     cursor = cursor+file_nums(i);
 end
 %% save the results
