@@ -12,7 +12,7 @@ def cosine(x,y):
 	s = np.linalg.norm(x,ord=2)*np.linalg.norm(y,ord=2)
 	if s==0:
 		return 0
-	return np.dot(x,y)/s
+	return 1-np.dot(x,y)/s # 注意值越大说明越相似……
 
 def KNN_recommend(**NN_paras):
 	if NN_paras == {}:

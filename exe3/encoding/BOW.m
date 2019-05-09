@@ -2,12 +2,13 @@ clear;
 clc;
 addpath(genpath('..'))
 cd('..')
-run('vl_setup')
+% run('vl_setup')
 
 data_path = '.\results\siftLD\siftLD.mat';
 class_path = '.\results\siftLD\classes.mat';
 numLD_path = '.\results\siftLD\numLD.mat';
-bow_dir = '.\results\bow\';
+numClusters = 200; % encode to a word vector of length numClusters
+bow_dir = sprintf('./results/bow%d/',numClusters);
 if ~exist(bow_dir,'dir')
     mkdir(bow_dir)
 end
@@ -19,7 +20,6 @@ load(numLD_path,'numLD'); % the local descriptor number in a figure
 
 %% build word dictionary (center)
 tic;
-numClusters = 100; % encode to a word vector of length numClusters
 centers = vl_kmeans(lds, numClusters);
 kdtree = vl_kdtreebuild(centers) ;
 model_time = toc;
