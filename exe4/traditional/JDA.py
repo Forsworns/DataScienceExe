@@ -1,11 +1,14 @@
 # Joint Distribution Adaptation
-import numpy as np
-from load_data import load_data
-import scipy.io
-import scipy.linalg
-import sklearn.metrics
-from sklearn.neighbors import KNeighborsClassifier
+import os
+import sys
+sys.path.append('..')
 from baseline import SVM_recommend
+from sklearn.neighbors import KNeighborsClassifier
+import sklearn.metrics
+import scipy.linalg
+import scipy.io
+from load_data import load_data
+import numpy as np
 
 
 def kernel(ker, X1, X2, gamma):
@@ -102,7 +105,8 @@ class JDA:
 
 
 if __name__ == '__main__':
-	X_src, y_src, X_tgt, y_tgt = load_data()
+    os.chdir('..')
+    X_src, y_src, X_tgt, y_tgt = load_data()
     jda = JDA(kernel_type='primal', dim=30, lamb=1, gamma=1)
-    acc, ypre, list_acc = jda.fit_predict(X_src, Y_src, X_tgt, Y_tgt)
+    acc, ypre, list_acc = jda.fit_predict(X_src, y_src, X_tgt, y_tgt)
     print(acc)

@@ -1,19 +1,20 @@
 # encoding=utf-8
+import sys
+sys.path.append('..')
+from baseline import SVM_recommend
+from sklearn.neighbors import KNeighborsClassifier
+import bob.math
+import bob.learn.linear
+import bob.learn
+import scipy
+import scipy.io
+import numpy as np
+from load_data import load_data
+import os
 """
     Created on 17:25 2018/11/13 
     @author: Jindong Wang
 """
-
-from load_data import load_data
-import numpy as np
-
-import scipy.io
-import scipy
-import bob.learn
-import bob.learn.linear
-import bob.math
-from sklearn.neighbors import KNeighborsClassifier
-from baseline import SVM_recommend
 
 
 class GFK:
@@ -171,7 +172,8 @@ class GFK:
 
 
 if __name__ == '__main__':
-	X_src, y_src, X_tgt, y_tgt = load_data()
+    os.chdir('..')
+    X_src, y_src, X_tgt, y_tgt = load_data()
     gfk = GFK(dim=20)
     acc, ypred, G = gfk.fit_predict(X_src, y_src, X_tgt, y_tgt)
     print(acc)

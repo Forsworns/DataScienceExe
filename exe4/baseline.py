@@ -1,4 +1,4 @@
-from sklearn.svm import SVC, LinearSVC
+from sklearn.svm import SVC
 
 from load_data import load_data
 from pre_process import pre_process
@@ -9,7 +9,7 @@ from configs import *
 def SVM_recommend(**SVM_paras):
 	if SVM_paras == {}:
 		SVM_paras = SVM_PARAS
-	return LinearSVC(**SVM_paras)
+	return SVC(**SVM_paras)
 
 
 def SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, bStore=False, paras={}, **SVM_paras):
@@ -22,7 +22,7 @@ def SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, bStore=False
 		clf = load_model(model_name, paras)
 		if clf is None:
 			print("can't find clf", model_name)
-			clf = LinearSVC(**SVM_paras)
+			clf = SVC(**SVM_paras)
 			clf.fit(X_train, y_train)
 			if bStore:
 				save_model(clf, model_name, paras)

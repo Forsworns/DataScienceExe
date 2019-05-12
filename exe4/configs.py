@@ -32,7 +32,6 @@ Y_TEST = "data/test_y.npy"
 
 # paras for baseline
 SVM_PARAS = {'C': 0.01, 'kernel': 'linear', 'max_iter': 2000}
-KNN_PARAS = {'n-neighbors':7, 'metric':'euclidean', 'algorithm':'auto', 'weights':'uniform'}
 
 COLORS = np.array(['#FF3333',  # red
                    '#0198E1',  # blue

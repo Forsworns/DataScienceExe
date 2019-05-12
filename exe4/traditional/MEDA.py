@@ -1,5 +1,7 @@
 #  Manifold Embedded Distribution Alignment
-
+import sys
+sys.path.append('..')
+import os
 from load_data import load_data
 import numpy as np
 import scipy.io
@@ -146,7 +148,8 @@ class MEDA:
 
 
 if __name__ == '__main__':
-	X_src, y_src, X_tgt, y_tgt = load_data()
+    os.chdir('..')
+    X_src, y_src, X_tgt, y_tgt = load_data()
     meda = MEDA(kernel_type='rbf', dim=20, lamb=10, rho=1.0, eta=0.1, p=10, gamma=1, T=10)
     acc, ypre, list_acc = meda.fit_predict(X_src, Y_src, X_tgt, y_tgt)
     print(acc)

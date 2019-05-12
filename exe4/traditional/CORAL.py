@@ -3,10 +3,12 @@
     Created on 16:31 2018/11/13 
     @author: Jindong Wang
 """
-
+import sys
+sys.path.append('..')
+import os
 import numpy as np
 from baseline import SVM_recommend
-import load_data from load_data
+from load_data import load_data
 import scipy.io
 import scipy.linalg
 import sklearn.metrics
@@ -48,6 +50,7 @@ class CORAL:
 
 
 if __name__ == '__main__':
+    os.chdir('..')
     X_src, y_src, X_tgt, y_tgt = load_data()
     coral = CORAL()
     acc, ypre = coral.fit_predict(X_src, y_src, X_tgt, y_tgt)
