@@ -1,13 +1,11 @@
-function X_src,y_src,X_tgt,y_tgt = load_data(type)
-	if typt == 'a':
+function [X_src,y_src,X_tgt,y_tgt] = load_data(type)
+	if type == 'a'
 		src = csvread('data/a/A_A.csv');
 		tgt = csvread('data/a/A_R.csv');
-	end
-	else if type == 'b':
+    elseif type == 'b'
 		src = csvread('data/b/C_C.csv');
 		tgt = csvread('data/b/C_R.csv');
-	end
-	else:
+    else
 		src = csvread('data/c/P_P.csv');
 		tgt = csvread('data/c/P_R.csv');
 	end

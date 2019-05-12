@@ -42,6 +42,7 @@ def SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, bStore=False
 
 
 if __name__ == "__main__":
-	X_src, y_src, X_tgt, y_tgt = load_data()
-	# baseline, train on the srouce domain, test on the target domain
-	SVM_recommend_run(BASELINE_SVM, X_src, X_tgt, y_src, y_tgt)
+	for data in range(3):
+		X_src, y_src, X_tgt, y_tgt = load_data(data)
+		# baseline, train on the srouce domain, test on the target domain
+		SVM_recommend_run(BASELINE_SVM, X_src, X_tgt, y_src, y_tgt,paras={"data":data})

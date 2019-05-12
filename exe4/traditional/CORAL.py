@@ -7,7 +7,7 @@ import sys
 sys.path.append('..')
 import os
 import numpy as np
-from baseline import SVM_recommend
+from baseline import SVM_recommend_run
 from load_data import load_data
 import scipy.io
 import scipy.linalg
@@ -32,7 +32,7 @@ class CORAL:
         Xs_new = np.dot(Xs, A_coral)
         return Xs_new
 
-    def fit_predict(self, Xs, Ys, Xt, Yt):
+    def fit_predict(self, Xs, Ys, Xt, Yt,**paras):
         '''
         Perform CORAL, then predict using 1NN classifier
         :param Xs: ns * n_feature, source feature
@@ -42,16 +42,12 @@ class CORAL:
         :return: Accuracy and predicted labels of target domain
         '''
         Xs_new = self.fit(Xs, Xt)
-        clf = SVM_recommend()
-        clf.fit(Xs_new, Ys.ravel())
-        y_pred = clf.predict(Xt)
-        acc = sklearn.metrics.accuracy_score(Yt, y_pred)
-        return acc, y_pred
+        SVM_recommend_run("CORAL",Xs_new, Xt, Ys, Yt, paras=paras)
 
 
 if __name__ == '__main__':
     os.chdir('..')
-    X_src, y_src, X_tgt, y_tgt = load_data()
-    coral = CORAL()
-    acc, ypre = coral.fit_predict(X_src, y_src, X_tgt, y_tgt)
-    print(acc)
+    for data in range(3):
+        X_src, y_src, X_tgt, y_tgt = load_data(data)
+        coral = CORAL()
+        coral.fit_predict(X_src, y_src, X_tgt, y_tgt,paras={"data":data})

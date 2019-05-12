@@ -5,7 +5,7 @@ import pandas as pd
 
 def load_data(dataset=0):
     '''
-    :param dataset: the order of the dataset, 0 for problem a, etc
+    :param dataset: the order of the dataset, 0 for problem a, 1 for b, 2 for c
     '''
     data_src = pd.read_csv(SRC_FILE[dataset])
     data_tgt = pd.read_csv(TGT_FILE[dataset]) 

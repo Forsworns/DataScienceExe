@@ -1,11 +1,12 @@
 function [mu,adist_m,adist_c] = estimate_mu(Xs,Ys,Xt,Yt)
-    C = length(unique(Ys));
+    labels = unique(Ys);
+    C = length(labels);
     list_adist_c = [];
     epsilon = 1e-3;
-    for i = 1 : C
-        index_i = Ys == i;
+    for i = 1 : C % 
+        index_i = Ys == labels(i);
         Xsi = Xs(index_i,:);
-        index_j = Yt == i;
+        index_j = Yt == labels(i);
         Xtj = Xt(index_j,:);
         adist_i = adist(Xsi,Xtj);
         list_adist_c = [list_adist_c;adist_i];
@@ -24,7 +25,6 @@ end
 function dist = adist(Xs,Xt)
     Yss = ones(size(Xs,1),1);
     Ytt = ones(size(Xt,1),1) * 2;
-    
     % The results of fitclinear() may vary in a very small range, since Matlab uses SGD to optimize SVM.
     % The fluctuation is very small, ignore it
     model_linear = fitclinear([Xs;Xt],[Yss;Ytt],'learner','svm');
