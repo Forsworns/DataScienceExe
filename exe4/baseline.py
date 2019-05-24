@@ -1,5 +1,5 @@
 from sklearn.svm import SVC
-
+from sklearn.neighbors import KNeighborsClassifier
 from load_data import load_data
 from pre_process import pre_process
 from sl_rm import *
@@ -18,7 +18,7 @@ def SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, bStore=False
 	if paras == {}:
 		paras.update(SVM_paras)
 	result = load_result(model_name, paras)
-	if result is None:
+	if True: #result is None:
 		clf = load_model(model_name, paras)
 		if clf is None:
 			print("can't find clf", model_name)
@@ -42,11 +42,11 @@ def SVM_recommend_run(model_name, X_train, X_test, y_train, y_test, bStore=False
 
 def KNN_recommend_run(model_name, X_train, X_test, y_train, y_test, bStore=False, paras={}, **NN_paras):
 	if NN_paras == {}:
-		NN_paras = {'n-neighbors':1, 'metric':'euclidean', 'algorithm':'auto', 'weights':'uniform'}
+		NN_paras = {'n_neighbors':1, 'metric':'euclidean', 'algorithm':'auto', 'weights':'uniform'}
 	if paras == {}:
 		paras.update(NN_paras)
 	result = load_result(model_name, paras)
-	if result is None:
+	if True:#result is None:
 		clf = load_model(model_name, paras)
 		if clf is None:
 			print("can't find clf",model_name)
@@ -74,4 +74,4 @@ if __name__ == "__main__":
 		X_src, y_src, X_tgt, y_tgt = load_data(data)
 		# baseline, train on the srouce domain, test on the target domain
 		SVM_recommend_run(BASELINE_SVM, X_src, X_tgt, y_src, y_tgt,paras={"data":data})
-		KNN_recommend_run(BASELINE_KNN, X_src, X_tgt, y_src, y_tgt,paras={"data":data})
+		# KNN_recommend_run(BASELINE_KNN, X_src, X_tgt, y_src, y_tgt,paras={"data":data})

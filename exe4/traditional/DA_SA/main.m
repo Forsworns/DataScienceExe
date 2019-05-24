@@ -1,6 +1,6 @@
 types = ['a','b','c'];
 Acc = zeros(3,2);
-subspace_dim_d = 50;
+subspace_dim_d = 250;
 
 for i=1:3
     [Xs,Ys,Xt,Yt] = load_data(types(i));

@@ -7,7 +7,7 @@ import sys
 sys.path.append('..')
 import os
 import numpy as np
-from baseline import SVM_recommend_run
+from baseline import SVM_recommend_run, KNN_recommend_run
 from load_data import load_data
 import scipy.io
 import scipy.linalg
@@ -43,6 +43,8 @@ class CORAL:
         '''
         Xs_new = self.fit(Xs, Xt)
         SVM_recommend_run("CORAL",Xs_new, Xt, Ys, Yt, paras=paras)
+        KNN_recommend_run("CORAL",Xs_new, Xt, Ys, Yt, paras=paras)
+
 
 
 if __name__ == '__main__':

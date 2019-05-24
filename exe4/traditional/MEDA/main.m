@@ -4,11 +4,11 @@ Acc = zeros(3,1);
 for i=1:3
     [Xs,Ys,Xt,Yt] = load_data(types(i));
     % meda
-    options.d = 20;
-    options.rho = 1.0;
+    options.d = 300;
     options.p = 10;
-    options.lambda = 10.0;
-    options.eta = 0.1;
+    options.rho = 0.2;
+    options.lambda = 20.0;
+    options.eta = 0.05;
     options.T = 10;
     [Acc(i),~,~,~] = MEDA(Xs,Ys,Xt,Yt,options);
     fprintf('type %d: %.2f accuracy \n\n', i, Acc(i) * 100);
