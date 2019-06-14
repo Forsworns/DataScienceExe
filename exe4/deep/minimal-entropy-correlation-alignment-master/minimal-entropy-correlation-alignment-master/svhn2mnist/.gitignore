@@ -1,7 +1,0 @@
-logs/
-model*/
-svhn/
-mnist/
-*.txt
-*.pyc
-*.pkl
